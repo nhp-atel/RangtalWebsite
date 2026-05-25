@@ -7,8 +7,8 @@ import MemberLoginModal from './MemberLoginModal.jsx'
 const links = [
   { label: 'Home', to: '/' },
   { label: 'Workshops', to: '/workshops' },
-  { label: 'Events', to: '/events' },
   { label: 'Gallery', to: '/gallery' },
+  { label: 'Events', to: '/events' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
 ]
