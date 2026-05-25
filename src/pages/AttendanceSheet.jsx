@@ -35,6 +35,7 @@ export default function AttendanceSheet() {
     const k = cellKey(regId, date)
     const wasPresent = present.has(k)
     const nextPresent = !wasPresent
+    setError('')
     // optimistic update
     setPresent((s) => {
       const n = new Set(s)
@@ -47,12 +48,13 @@ export default function AttendanceSheet() {
       body: JSON.stringify({ registrationId: regId, date, present: nextPresent }),
     })
     if (!res.ok) {
-      // rollback on failure
+      // rollback on failure and tell the user (e.g. an expired session)
       setPresent((s) => {
         const n = new Set(s)
         if (wasPresent) n.add(k); else n.delete(k)
         return n
       })
+      setError('Could not save — your session may have expired. Reload and try again.')
     }
   }
 
