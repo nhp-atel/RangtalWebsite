@@ -42,6 +42,7 @@ const GOOGLE_FORM = {
     email: '',
     phone: '',
     age: '',
+    guardian: '',
     batch: '',
     level: '',
     emergency: '',
@@ -58,6 +59,8 @@ const LEVELS = [
 ]
 
 const AGE_GROUPS = ['6—12', '13—17', '18—25', '26—40', '40+']
+// Under-18 groups — these require a parent/guardian name.
+const MINOR_AGE_GROUPS = ['6—12', '13—17']
 
 const initial = {
   workshop: WORKSHOPS.length === 1 ? WORKSHOPS[0].id : null,
@@ -66,6 +69,7 @@ const initial = {
   email: '',
   phone: '',
   age: '',
+  guardian: '',
   emergency: '',
   notes: '',
   agreed: false,
@@ -148,12 +152,23 @@ export default function Registration() {
   const chosenWs = useMemo(() => WORKSHOPS.find((w) => w.id === data.workshop), [data.workshop])
   const total = chosenWs ? chosenWs.price : 0
   const grand = total
+  const isMinor = MINOR_AGE_GROUPS.includes(data.age)
+
+  // Select an age group; drop any guardian name if the new group is an adult one.
+  const selectAge = (a) =>
+    setData((d) => ({ ...d, age: a, guardian: MINOR_AGE_GROUPS.includes(a) ? d.guardian : '' }))
 
   const canAdvance = () => {
     if (step === 0) return !!data.workshop
     if (step === 1) return !!data.level
     if (step === 2)
-      return data.fullName.trim().length > 1 && /\S+@\S+\.\S+/.test(data.email) && data.phone.replace(/\D/g, '').length >= 8 && data.age
+      return (
+        data.fullName.trim().length > 1 &&
+        /\S+@\S+\.\S+/.test(data.email) &&
+        data.phone.replace(/\D/g, '').length >= 8 &&
+        data.age &&
+        (!isMinor || data.guardian.trim().length > 1)
+      )
     if (step === 3) return data.agreed
     return true
   }
@@ -171,6 +186,7 @@ export default function Registration() {
     add(e.email, data.email)
     add(e.phone, data.phone)
     add(e.age, data.age)
+    add(e.guardian, data.guardian)
     add(e.batch, chosenWs?.name)
     add(e.level, LEVELS.find((l) => l.id === data.level)?.title)
     add(e.emergency, data.emergency)
@@ -403,7 +419,7 @@ export default function Registration() {
                               <button
                                 key={a}
                                 type="button"
-                                onClick={() => set('age', a)}
+                                onClick={() => selectAge(a)}
                                 className={`rounded-full border px-4 py-2 text-xs font-medium transition ${
                                   data.age === a
                                     ? 'border-gold bg-gold/15 text-gold'
@@ -415,6 +431,30 @@ export default function Registration() {
                             ))}
                           </div>
                         </Field>
+                        <AnimatePresence>
+                          {isMinor && (
+                            <motion.div
+                              key="guardian"
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="md:col-span-2"
+                            >
+                              <Field
+                                label="Parent / Guardian name"
+                                hint="Required for dancers under 18."
+                              >
+                                <input
+                                  className={inputCls}
+                                  placeholder="e.g. Meera Patel"
+                                  value={data.guardian}
+                                  onChange={(e) => set('guardian', e.target.value)}
+                                />
+                              </Field>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                         <Field label="Emergency contact" hint="Name and phone — just in case.">
                           <input
                             className={inputCls}
@@ -661,6 +701,12 @@ export default function Registration() {
                     <span>Age group</span>
                     <span className="text-cream">{data.age || '—'}</span>
                   </div>
+                  {data.guardian.trim() && (
+                    <div className="flex items-center justify-between text-cream/70">
+                      <span>Guardian</span>
+                      <span className="text-cream">{data.guardian}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="my-5 h-px bg-cream/10" />
