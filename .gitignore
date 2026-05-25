@@ -3,3 +3,8 @@ dist
 .DS_Store
 .vite
 *.log
+
+# local SQLite (dev)
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
