@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import DandiyaMedallion from '../components/DandiyaMedallion.jsx'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/rangtaal_'
+const WHATSAPP_URL = 'https://chat.whatsapp.com/GHcpbXvDVKUELszf2NGDoJ?mode=gi_t'
 const EMAIL = 'hello@rangtaal.com'
 const PHONE_DISPLAY = '(630) 555-0150'
 const PHONE_HREF = 'tel:+16305550150'
@@ -15,7 +16,7 @@ const socials = [
   },
   {
     label: 'WhatsApp',
-    href: '#',
+    href: WHATSAPP_URL,
     icon: 'M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2Zm5 14.2c-.3.7-1.4 1.4-2 1.5-.5.1-1.2.1-1.9-.1-1-.3-2.2-.8-3.6-2.2-1.4-1.4-2-2.7-2.3-3.7-.3-1 0-1.6.4-2 .3-.4.8-.5 1-.5h.6c.2 0 .4 0 .6.5l.7 1.6c.1.2.2.4 0 .7-.1.3-.2.5-.4.7-.2.2-.4.4-.2.7.2.3.8 1.4 1.7 2.2 1.1 1 2 1.3 2.3 1.4.3.2.5.1.7-.1l.9-1c.2-.2.4-.1.6 0l1.5.7c.3.1.5.2.5.4.1.2.1.6-.2 1Z',
   },
 ]
