@@ -29,27 +29,6 @@ const WORKSHOPS = [
   { id: 'august', name: 'August Batch', date: 'Tuesdays · 7:30 – 9:30 PM', price: 60, color: '#FF4D8D', tag: 'Open now' },
 ]
 
-// --- Google Form integration ---------------------------------------------
-// The live form ("Rangtaal: June Garba Workshops 2026") reopens weekly. To pipe
-// these submissions straight into it, paste each field's entry ID below.
-// How to get them: open the LIVE form → ⋮ menu → "Get pre-filled link" →
-// fill dummy values → "Get link" → copy the entry.XXXXXXX numbers from the URL.
-// Until at least one is filled, the form just shows the confirmation screen.
-const GOOGLE_FORM = {
-  id: '1FAIpQLSdDiTvWBFypdFEWxdMoHw-OexwNFpbf0HGdOrHhtYBGjAsNfw',
-  entries: {
-    fullName: '', // e.g. 'entry.123456789'
-    email: '',
-    phone: '',
-    age: '',
-    guardian: '',
-    batch: '',
-    level: '',
-    emergency: '',
-    notes: '',
-  },
-}
-const GOOGLE_FORM_READY = Object.values(GOOGLE_FORM.entries).some(Boolean)
 
 const LEVELS = [
   { id: 'first', title: 'First time', sub: 'No experience needed — we’ll start at zero.' },
@@ -139,6 +118,9 @@ export default function Registration() {
   const [step, setStep] = useState(0)
   const [data, setData] = useState(initial)
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }))
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [refCode, setRefCode] = useState('')
   const location = useLocation()
 
   // Preselect the batch the user clicked "Reserve" on (passed via router state).
@@ -176,31 +158,46 @@ export default function Registration() {
   const next = () => canAdvance() && setStep((s) => Math.min(s + 1, STEPS.length - 1))
   const back = () => setStep((s) => Math.max(s - 1, 0))
 
-  // Pipe the submission into the live Google Form (no-cors fire-and-forget).
-  const submitToGoogleForm = () => {
-    if (!GOOGLE_FORM_READY) return
-    const e = GOOGLE_FORM.entries
-    const fd = new FormData()
-    const add = (key, val) => key && val && fd.append(key, val)
-    add(e.fullName, data.fullName)
-    add(e.email, data.email)
-    add(e.phone, data.phone)
-    add(e.age, data.age)
-    add(e.guardian, data.guardian)
-    add(e.batch, chosenWs?.name)
-    add(e.level, LEVELS.find((l) => l.id === data.level)?.title)
-    add(e.emergency, data.emergency)
-    add(e.notes, data.notes)
-    fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM.id}/formResponse`, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: fd,
-    }).catch(() => {})
+  const submitRegistration = async () => {
+    setSubmitting(true)
+    setSubmitError('')
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          ageGroup: data.age,
+          batch: data.workshop,
+          level: data.level,
+          emergency: data.emergency,
+          notes: data.notes,
+          agreed: data.agreed,
+        }),
+      })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setSubmitError(body.error || 'Something went wrong. Your spot was not saved.')
+        return false
+      }
+      setRefCode(body.ref || '')
+      return true
+    } catch {
+      setSubmitError('Network error. Your spot was not saved — please try again.')
+      return false
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-  const handleNext = () => {
-    if (!canAdvance()) return
-    if (step === 4) submitToGoogleForm()
+  const handleNext = async () => {
+    if (!canAdvance() || submitting) return
+    if (step === 4) {
+      const ok = await submitRegistration()
+      if (!ok) return
+    }
     next()
   }
 
@@ -594,6 +591,11 @@ export default function Registration() {
                         Sign-ups are final and non-refundable — you agreed to our code of
                         conduct in the previous step.
                       </p>
+                      {submitError && (
+                        <p className="mt-4 rounded-xl border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-200">
+                          {submitError}
+                        </p>
+                      )}
                     </motion.div>
                   )}
 
@@ -619,7 +621,7 @@ export default function Registration() {
                         You’re in.
                       </h3>
                       <p className="mt-2 max-w-md text-cream/65">
-                        We’ve sent your confirmation to <span className="text-cream">{data.email || 'your inbox'}</span>. Your reservation ID is <span className="font-mono text-gold">RT-{Math.floor(Math.random() * 90000 + 10000)}</span>.
+                        We’ve sent your confirmation to <span className="text-cream">{data.email || 'your inbox'}</span>. Your reservation ID is <span className="font-mono text-gold">{refCode || '—'}</span>.
                       </p>
                       <div className="mt-8 grid w-full max-w-md grid-cols-2 gap-3 text-left">
                         <div className="rounded-xl border border-cream/10 bg-cream/[0.04] p-4">
@@ -635,6 +637,8 @@ export default function Registration() {
                         onClick={() => {
                           setData(initial)
                           setStep(0)
+                          setRefCode('')
+                          setSubmitError('')
                         }}
                         className="btn-ghost mt-8"
                       >
@@ -661,10 +665,10 @@ export default function Registration() {
                   <button
                     type="button"
                     onClick={handleNext}
-                    disabled={!canAdvance()}
-                    className={`btn-primary !px-7 !py-3 ${!canAdvance() ? 'pointer-events-none opacity-40' : ''}`}
+                    disabled={!canAdvance() || submitting}
+                    className={`btn-primary !px-7 !py-3 ${!canAdvance() || submitting ? 'pointer-events-none opacity-40' : ''}`}
                   >
-                    {step === 4 ? 'Confirm & Register' : 'Continue'}
+                    {step === 4 ? (submitting ? 'Saving…' : 'Confirm & Register') : 'Continue'}
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                       <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
