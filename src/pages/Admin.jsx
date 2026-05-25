@@ -192,13 +192,26 @@ export default function Admin() {
                       <button onClick={() => setExpanded(expanded === r.id ? null : r.id)} className="text-cream hover:text-gold">
                         {r.full_name}
                       </button>
+                      {r.guardian && (
+                        <span className="mt-0.5 flex items-center gap-1.5 text-xs text-gold/80">
+                          <span className="rounded bg-gold/15 px-1.5 py-px text-[0.55rem] font-semibold uppercase tracking-wide text-gold">
+                            Minor
+                          </span>
+                          Guardian: {r.guardian}
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-cream/70">{r.email}</td>
                     <td className="px-4 py-3 text-cream/70">{r.phone}</td>
                     <td className="px-4 py-3 text-cream/70">{BATCH_LABELS[r.batch] || r.batch}</td>
                     <td className="px-4 py-3 text-cream/70">{r.level || '—'}</td>
                     <td className="px-4 py-3 text-cream/70">{r.age_group || '—'}</td>
-                    <td className="px-4 py-3 text-cream/50">{new Date(r.created_at).toLocaleDateString()}</td>
+                    <td className="px-4 py-3 text-cream/50">
+                      {new Date(r.created_at).toLocaleString(undefined, {
+                        year: 'numeric', month: 'short', day: 'numeric',
+                        hour: 'numeric', minute: '2-digit',
+                      })}
+                    </td>
                   </tr>
                   {expanded === r.id && (
                     <tr className="border-t border-cream/5 bg-cream/[0.02]">
