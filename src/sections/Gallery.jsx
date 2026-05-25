@@ -9,10 +9,10 @@ const tiles = [
   { id: 1, src: '/GR4.jpg', title: 'Under the Lights', moment: 'Garba Night', span: 'lg:col-span-4 lg:row-span-2 h-[440px] lg:h-[620px]' },
   { id: 2, src: '/GR2.jpg', title: 'Festival Lights', moment: 'Navratri Night', span: 'lg:col-span-8 h-[300px]' },
   { id: 3, src: '/GR3.jpg', title: 'Dressed to Dance', moment: 'Before the Circle', span: 'lg:col-span-4 h-[300px]' },
-  { id: 4, src: '/GR1.jpg', title: 'Where It Started', moment: 'Schaumburg · 2025', span: 'lg:col-span-4 h-[300px]' },
+  { id: 4, src: '/GR6.jpg', title: 'The Big Floor', moment: 'Navratri Crowd', span: 'lg:col-span-4 h-[300px]' },
   { id: 5, src: '/GR7.jpg', title: 'Faces of Rangtaal', moment: 'In the Moment', span: 'lg:col-span-6 h-[340px]', pos: 'center 35%' },
   { id: 6, src: '/GR5.jpg', title: 'On the Field', moment: 'Community Night', span: 'lg:col-span-6 h-[340px]' },
-  { id: 7, src: '/GR6.jpg', title: 'The Big Floor', moment: 'Navratri Crowd', span: 'lg:col-span-12 h-[300px] lg:h-[440px]' },
+  { id: 7, src: '/GR1.jpg', title: 'The Whole Circle', moment: 'The Rangtaal family', span: 'lg:col-span-12 h-[300px] lg:h-[440px]', pos: 'center 35%' },
 ]
 
 const COUNT = String(tiles.length).padStart(2, '0')
