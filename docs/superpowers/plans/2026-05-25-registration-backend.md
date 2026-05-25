@@ -513,7 +513,7 @@ export function createApp(db, opts = {}) {
 
   const registerLimiter = rateLimit({
     windowMs: 60 * 1000,
-    max: 10,
+    limit: 10,
     standardHeaders: true,
     legacyHeaders: false,
   })
@@ -528,12 +528,17 @@ export function createApp(db, opts = {}) {
   if (serveStatic) {
     const dist = path.join(__dirname, '..', 'dist')
     app.use(express.static(dist))
-    app.get('*', (req, res) => res.sendFile(path.join(dist, 'index.html')))
+    // SPA fallback. Registered last and after the /api 404 above, so it only
+    // catches non-API routes. Express 5 dropped the bare '*' path, so use a
+    // path-less middleware (works on Express 4 and 5).
+    app.use((req, res) => res.sendFile(path.join(dist, 'index.html')))
   }
 
   return app
 }
 ```
+
+> **Express 5 note (this project installed `express@^5`):** Do not use `app.get('*', ...)` — Express 5's path-to-regexp rejects a bare `*` and the server will crash on boot. Use the path-less `app.use((req, res) => ...)` fallback shown above. Likewise the rate limiter uses `limit:` (not the deprecated `max:`).
 
 - [ ] **Step 6: Run test to verify it passes**
 
