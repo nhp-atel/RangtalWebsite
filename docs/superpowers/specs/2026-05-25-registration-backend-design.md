@@ -83,6 +83,7 @@ One table. Columns map straight from the existing form, plus payment tracking.
 | `batch` | TEXT NOT NULL | `july` / `august` |
 | `level` | TEXT | form (`first`/`social`/`trained`/`pro`) |
 | `emergency` | TEXT | form |
+| `guardian` | TEXT | form — parent/guardian name, required client-side for under-18 age groups; nullable in DB |
 | `notes` | TEXT | form (optional) |
 | `amount` | INTEGER NOT NULL | fee in dollars captured at signup (60) |
 | `agreed` | INTEGER NOT NULL (0/1) | code of conduct accepted |
