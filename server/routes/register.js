@@ -7,9 +7,9 @@ export function registerRouter(db) {
 
   const insert = db.prepare(`
     INSERT INTO registrations
-      (ref, full_name, email, phone, age_group, batch, level, emergency, notes, amount, agreed, paid, paid_at, created_at)
+      (ref, full_name, email, phone, age_group, batch, level, emergency, guardian, notes, amount, agreed, paid, paid_at, created_at)
     VALUES
-      (@ref, @full_name, @email, @phone, @age_group, @batch, @level, @emergency, @notes, @amount, @agreed, 0, NULL, @created_at)
+      (@ref, @full_name, @email, @phone, @age_group, @batch, @level, @emergency, @guardian, @notes, @amount, @agreed, 0, NULL, @created_at)
   `)
 
   router.post('/register', (req, res) => {
@@ -42,6 +42,7 @@ export function registerRouter(db) {
           batch: b.batch,
           level: b.level || null,
           emergency: b.emergency || null,
+          guardian: b.guardian || null,
           notes: b.notes || null,
           amount,
           agreed: 1,

@@ -14,6 +14,7 @@ export function createDb(path) {
       batch       TEXT NOT NULL,
       level       TEXT,
       emergency   TEXT,
+      guardian    TEXT,
       notes       TEXT,
       amount      INTEGER NOT NULL,
       agreed      INTEGER NOT NULL DEFAULT 0,

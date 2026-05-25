@@ -75,4 +75,12 @@ describe('POST /api/register', () => {
     const row = db.prepare('SELECT amount FROM registrations WHERE ref = ?').get(res.body.ref)
     expect(row.amount).toBe(60)
   })
+
+  it('stores a guardian name for minors when provided', async () => {
+    const res = await request(app).post('/api/register').send({ ...valid, ageGroup: '13—17', guardian: 'Meera Patel' })
+    expect(res.status).toBe(201)
+    const row = db.prepare('SELECT guardian, age_group FROM registrations WHERE ref = ?').get(res.body.ref)
+    expect(row.guardian).toBe('Meera Patel')
+    expect(row.age_group).toBe('13—17')
+  })
 })

@@ -80,6 +80,7 @@ export function adminRouter(db, { adminPassword } = {}) {
       { key: 'batch', label: 'Batch' },
       { key: 'level', label: 'Level' },
       { key: 'emergency', label: 'Emergency' },
+      { key: 'guardian', label: 'Guardian' },
       { key: 'notes', label: 'Notes' },
       { key: 'amount', label: 'Amount' },
       { key: 'paid', label: 'Paid' },

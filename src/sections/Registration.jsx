@@ -173,6 +173,7 @@ export default function Registration() {
           batch: data.workshop,
           level: data.level,
           emergency: data.emergency,
+          guardian: data.guardian,
           notes: data.notes,
           agreed: data.agreed,
         }),
