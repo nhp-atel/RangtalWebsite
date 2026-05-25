@@ -6,6 +6,9 @@ import { toCsv } from '../lib/csv.js'
 function safeEqual(a, b) {
   const ab = Buffer.from(String(a))
   const bb = Buffer.from(String(b))
+  // Length mismatch can't go through timingSafeEqual (it throws on unequal
+  // lengths). This leaks only the password's byte-length, which is an
+  // acceptable trade-off for this internal shared-password tool.
   if (ab.length !== bb.length) return false
   return crypto.timingSafeEqual(ab, bb)
 }
@@ -14,10 +17,18 @@ function buildFilter(q) {
   const where = []
   const params = {}
   if (q.batch) { where.push('batch = @batch'); params.batch = q.batch }
-  if (q.paid === 'true') where.push('paid = 1')
-  if (q.paid === 'false') where.push('paid = 0')
+  // Only the exact strings 'true'/'false' filter by paid status; any other
+  // value means "no paid filter" (returns both paid and unpaid).
+  const paid = typeof q.paid === 'string' ? q.paid.toLowerCase() : q.paid
+  if (paid === 'true') where.push('paid = 1')
+  if (paid === 'false') where.push('paid = 0')
   if (q.q) { where.push('(full_name LIKE @like OR email LIKE @like)'); params.like = '%' + q.q + '%' }
   return { clause: where.length ? 'WHERE ' + where.join(' AND ') : '', params }
+}
+
+function fetchRows(db, query) {
+  const { clause, params } = buildFilter(query)
+  return db.prepare(`SELECT * FROM registrations ${clause} ORDER BY created_at DESC`).all(params)
 }
 
 export function adminRouter(db, { adminPassword } = {}) {
@@ -37,8 +48,7 @@ export function adminRouter(db, { adminPassword } = {}) {
   })
 
   router.get('/registrations', requireAuth, (req, res) => {
-    const { clause, params } = buildFilter(req.query)
-    const rows = db.prepare(`SELECT * FROM registrations ${clause} ORDER BY created_at DESC`).all(params)
+    const rows = fetchRows(db, req.query)
     const counts = {
       total: db.prepare('SELECT COUNT(*) n FROM registrations').get().n,
       paid: db.prepare('SELECT COUNT(*) n FROM registrations WHERE paid = 1').get().n,
@@ -60,8 +70,7 @@ export function adminRouter(db, { adminPassword } = {}) {
   })
 
   router.get('/export.csv', requireAuth, (req, res) => {
-    const { clause, params } = buildFilter(req.query)
-    const rows = db.prepare(`SELECT * FROM registrations ${clause} ORDER BY created_at DESC`).all(params)
+    const rows = fetchRows(db, req.query)
     const columns = [
       { key: 'ref', label: 'Ref' },
       { key: 'full_name', label: 'Name' },

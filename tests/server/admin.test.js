@@ -40,6 +40,15 @@ describe('admin auth', () => {
     expect(list.body.counts.total).toBe(1)
     expect(list.body.counts.unpaid).toBe(1)
   })
+
+  it('logout invalidates the session', async () => {
+    const agent = request.agent(app)
+    await agent.post('/api/register').send(reg())
+    await agent.post('/api/admin/login').send({ password: 'test-pass' })
+    await agent.post('/api/admin/logout')
+    const res = await agent.get('/api/admin/registrations')
+    expect(res.status).toBe(401)
+  })
 })
 
 describe('admin filters + paid toggle + csv', () => {
@@ -91,5 +100,10 @@ describe('admin filters + paid toggle + csv', () => {
   it('blocks the paid toggle without a session', async () => {
     const res = await request(app).patch('/api/admin/registrations/1').send({ paid: true })
     expect(res.status).toBe(401)
+  })
+
+  it('filters by unpaid (paid=false)', async () => {
+    const res = await agent.get('/api/admin/registrations?paid=false')
+    expect(res.body.rows.length).toBe(2)
   })
 })
