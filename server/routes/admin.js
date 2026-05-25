@@ -1,5 +1,86 @@
 import { Router } from 'express'
-// Fleshed out in Task 5.
-export function adminRouter() {
-  return Router()
+import crypto from 'node:crypto'
+import { requireAuth } from '../middleware/auth.js'
+import { toCsv } from '../lib/csv.js'
+
+function safeEqual(a, b) {
+  const ab = Buffer.from(String(a))
+  const bb = Buffer.from(String(b))
+  if (ab.length !== bb.length) return false
+  return crypto.timingSafeEqual(ab, bb)
+}
+
+function buildFilter(q) {
+  const where = []
+  const params = {}
+  if (q.batch) { where.push('batch = @batch'); params.batch = q.batch }
+  if (q.paid === 'true') where.push('paid = 1')
+  if (q.paid === 'false') where.push('paid = 0')
+  if (q.q) { where.push('(full_name LIKE @like OR email LIKE @like)'); params.like = '%' + q.q + '%' }
+  return { clause: where.length ? 'WHERE ' + where.join(' AND ') : '', params }
+}
+
+export function adminRouter(db, { adminPassword } = {}) {
+  const router = Router()
+
+  router.post('/login', (req, res) => {
+    const password = (req.body && req.body.password) || ''
+    if (!adminPassword || !safeEqual(password, adminPassword)) {
+      return res.status(401).json({ error: 'Incorrect password.' })
+    }
+    req.session.admin = true
+    return res.json({ ok: true })
+  })
+
+  router.post('/logout', (req, res) => {
+    req.session.destroy(() => res.json({ ok: true }))
+  })
+
+  router.get('/registrations', requireAuth, (req, res) => {
+    const { clause, params } = buildFilter(req.query)
+    const rows = db.prepare(`SELECT * FROM registrations ${clause} ORDER BY created_at DESC`).all(params)
+    const counts = {
+      total: db.prepare('SELECT COUNT(*) n FROM registrations').get().n,
+      paid: db.prepare('SELECT COUNT(*) n FROM registrations WHERE paid = 1').get().n,
+      unpaid: db.prepare('SELECT COUNT(*) n FROM registrations WHERE paid = 0').get().n,
+      byBatch: db.prepare('SELECT batch, COUNT(*) n FROM registrations GROUP BY batch').all()
+        .reduce((acc, r) => { acc[r.batch] = r.n; return acc }, {}),
+    }
+    res.json({ rows, counts })
+  })
+
+  router.patch('/registrations/:id', requireAuth, (req, res) => {
+    const id = Number(req.params.id)
+    const paid = !!(req.body && req.body.paid === true)
+    const exists = db.prepare('SELECT id FROM registrations WHERE id = ?').get(id)
+    if (!exists) return res.status(404).json({ error: 'Not found.' })
+    db.prepare('UPDATE registrations SET paid = ?, paid_at = ? WHERE id = ?')
+      .run(paid ? 1 : 0, paid ? new Date().toISOString() : null, id)
+    res.json(db.prepare('SELECT * FROM registrations WHERE id = ?').get(id))
+  })
+
+  router.get('/export.csv', requireAuth, (req, res) => {
+    const { clause, params } = buildFilter(req.query)
+    const rows = db.prepare(`SELECT * FROM registrations ${clause} ORDER BY created_at DESC`).all(params)
+    const columns = [
+      { key: 'ref', label: 'Ref' },
+      { key: 'full_name', label: 'Name' },
+      { key: 'email', label: 'Email' },
+      { key: 'phone', label: 'Phone' },
+      { key: 'age_group', label: 'Age' },
+      { key: 'batch', label: 'Batch' },
+      { key: 'level', label: 'Level' },
+      { key: 'emergency', label: 'Emergency' },
+      { key: 'notes', label: 'Notes' },
+      { key: 'amount', label: 'Amount' },
+      { key: 'paid', label: 'Paid' },
+      { key: 'paid_at', label: 'Paid At' },
+      { key: 'created_at', label: 'Registered' },
+    ]
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+    res.setHeader('Content-Disposition', 'attachment; filename="rangtaal-registrations.csv"')
+    res.send(toCsv(rows, columns))
+  })
+
+  return router
 }
