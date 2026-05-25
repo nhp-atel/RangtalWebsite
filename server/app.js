@@ -40,6 +40,14 @@ export function createApp(db, opts = {}) {
   })
   app.use('/api/register', registerLimiter)
 
+  const loginLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+  })
+  app.use('/api/admin/login', loginLimiter)
+
   app.use('/api', registerRouter(db))
   app.use('/api/admin', adminRouter(db, { adminPassword }))
 

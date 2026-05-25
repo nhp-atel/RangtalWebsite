@@ -6,7 +6,7 @@ services:
     buildCommand: npm ci && npm run build
     startCommand: node server/index.js
     healthCheckPath: /
-    pullRequestPreviewsEnabled: true
+    pullRequestPreviewsEnabled: false
     disk:
       name: data
       mountPath: /data

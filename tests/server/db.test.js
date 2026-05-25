@@ -7,7 +7,7 @@ describe('createDb', () => {
     const cols = db.prepare('PRAGMA table_info(registrations)').all().map((c) => c.name)
     for (const name of [
       'id', 'ref', 'full_name', 'email', 'phone', 'age_group', 'batch',
-      'level', 'emergency', 'notes', 'amount', 'agreed', 'paid', 'paid_at', 'created_at',
+      'level', 'emergency', 'guardian', 'notes', 'amount', 'agreed', 'paid', 'paid_at', 'created_at',
     ]) {
       expect(cols).toContain(name)
     }

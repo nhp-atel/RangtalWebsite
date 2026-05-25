@@ -622,7 +622,7 @@ export default function Registration() {
                         You’re in.
                       </h3>
                       <p className="mt-2 max-w-md text-cream/65">
-                        We’ve sent your confirmation to <span className="text-cream">{data.email || 'your inbox'}</span>. Your reservation ID is <span className="font-mono text-gold">{refCode || '—'}</span>.
+                        Your spot is saved — your reservation ID is <span className="font-mono text-gold">{refCode || '—'}</span>. If you haven&rsquo;t already, send your Zelle payment to lock it in; the team will confirm once it arrives.
                       </p>
                       <div className="mt-8 grid w-full max-w-md grid-cols-2 gap-3 text-left">
                         <div className="rounded-xl border border-cream/10 bg-cream/[0.04] p-4">
