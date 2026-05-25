@@ -25,6 +25,15 @@ export function createDb(path) {
     CREATE INDEX IF NOT EXISTS idx_reg_batch   ON registrations(batch);
     CREATE INDEX IF NOT EXISTS idx_reg_paid    ON registrations(paid);
     CREATE INDEX IF NOT EXISTS idx_reg_created ON registrations(created_at);
+    CREATE TABLE IF NOT EXISTS attendance (
+      id               INTEGER PRIMARY KEY AUTOINCREMENT,
+      registration_id  INTEGER NOT NULL,
+      date             TEXT NOT NULL,
+      created_at       TEXT NOT NULL,
+      UNIQUE(registration_id, date)
+    );
+    CREATE INDEX IF NOT EXISTS idx_att_date ON attendance(date);
+    CREATE INDEX IF NOT EXISTS idx_att_reg  ON attendance(registration_id);
   `)
   return db
 }

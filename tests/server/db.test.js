@@ -24,4 +24,19 @@ describe('createDb', () => {
     expect(() => ins.run('RT-11111')).toThrow()
     db.close()
   })
+
+  it('creates the attendance table with a unique (registration_id, date)', () => {
+    const db = createDb(':memory:')
+    const cols = db.prepare('PRAGMA table_info(attendance)').all().map((c) => c.name)
+    for (const name of ['id', 'registration_id', 'date', 'created_at']) {
+      expect(cols).toContain(name)
+    }
+    const ins = db.prepare(
+      `INSERT INTO attendance (registration_id, date, created_at)
+       VALUES (1, '2026-07-07', '2026-05-25T00:00:00Z')`
+    )
+    ins.run()
+    expect(() => ins.run()).toThrow() // UNIQUE(registration_id, date)
+    db.close()
+  })
 })

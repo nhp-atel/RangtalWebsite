@@ -5,6 +5,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { registerRouter } from './routes/register.js'
 import { adminRouter } from './routes/admin.js'
+import { attendanceRouter } from './routes/attendance.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -50,6 +51,7 @@ export function createApp(db, opts = {}) {
 
   app.use('/api', registerRouter(db))
   app.use('/api/admin', adminRouter(db, { adminPassword }))
+  app.use('/api/admin/attendance', attendanceRouter(db))
 
   // Unknown API routes should 404 as JSON, not fall through to the SPA.
   app.use('/api', (req, res) => res.status(404).json({ error: 'Not found.' }))

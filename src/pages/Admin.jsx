@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, Fragment } from 'react'
+import AttendanceSheet from './AttendanceSheet.jsx'
 
 const BATCH_LABELS = { july: 'July', august: 'August' }
 
@@ -21,6 +22,7 @@ export default function Admin() {
   const [paid, setPaid] = useState('')
   const [loading, setLoading] = useState(false)
   const [expanded, setExpanded] = useState(null)
+  const [tab, setTab] = useState('registrations')
 
   const query = () => {
     const p = new URLSearchParams()
@@ -111,11 +113,30 @@ export default function Admin() {
             <h1 className="display-serif mt-2 text-3xl text-cream">Registrations</h1>
           </div>
           <div className="flex gap-3">
-            <a href={`/api/admin/export.csv${query()}`} className="btn-ghost">Export CSV</a>
+            {tab === 'registrations' && (
+              <a href={`/api/admin/export.csv${query()}`} className="btn-ghost">Export CSV</a>
+            )}
             <button onClick={logout} className="btn-ghost">Log out</button>
           </div>
         </div>
 
+        {/* tabs */}
+        <div className="mt-6 flex gap-2">
+          {['registrations', 'attendance'].map((t) => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition ${
+                tab === t ? 'bg-gold text-navy-900' : 'border border-cream/15 text-cream/70 hover:border-gold/60'
+              }`}
+            >
+              {t === 'registrations' ? 'Registrations' : 'Attendance'}
+            </button>
+          ))}
+        </div>
+
+        {tab === 'registrations' && (
+          <>
         {/* counts */}
         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
@@ -232,6 +253,10 @@ export default function Admin() {
             </tbody>
           </table>
         </div>
+          </>
+        )}
+
+        {tab === 'attendance' && <AttendanceSheet />}
       </div>
     </section>
   )
