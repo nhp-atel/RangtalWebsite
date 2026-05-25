@@ -49,10 +49,12 @@ export function registerRouter(db) {
         })
         return res.status(201).json({ ref, batch: b.batch })
       } catch (e) {
-        if (String(e.message).includes('UNIQUE') && attempt < 4) continue
+        // A duplicate ref is the only retryable error: generate a new one.
+        if (e && e.code === 'SQLITE_CONSTRAINT_UNIQUE') continue
         return res.status(500).json({ error: 'Could not save your registration. Please try again.' })
       }
     }
+    // All retries collided (astronomically unlikely): give up cleanly.
     return res.status(500).json({ error: 'Could not save your registration. Please try again.' })
   })
 

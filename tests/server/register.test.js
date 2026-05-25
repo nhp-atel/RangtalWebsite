@@ -29,6 +29,7 @@ describe('POST /api/register', () => {
     const res = await request(app).post('/api/register').send(valid)
     expect(res.status).toBe(201)
     expect(res.body.ref).toMatch(/^RT-\d{5}$/)
+    expect(res.body.batch).toBe('july')
     const row = db.prepare('SELECT * FROM registrations WHERE ref = ?').get(res.body.ref)
     expect(row.full_name).toBe('Ankita Patel')
     expect(row.amount).toBe(60)   // derived server-side
@@ -56,5 +57,22 @@ describe('POST /api/register', () => {
     const res = await request(app).post('/api/register').send({ ...valid, hp: 'bot' })
     expect(res.status).toBe(200)
     expect(db.prepare('SELECT COUNT(*) n FROM registrations').get().n).toBe(0)
+  })
+
+  it('rejects a too-short name with 400', async () => {
+    const res = await request(app).post('/api/register').send({ ...valid, fullName: 'A' })
+    expect(res.status).toBe(400)
+  })
+
+  it('rejects a too-short phone with 400', async () => {
+    const res = await request(app).post('/api/register').send({ ...valid, phone: '123' })
+    expect(res.status).toBe(400)
+  })
+
+  it('ignores a client-sent amount and stores the server price', async () => {
+    const res = await request(app).post('/api/register').send({ ...valid, amount: 999 })
+    expect(res.status).toBe(201)
+    const row = db.prepare('SELECT amount FROM registrations WHERE ref = ?').get(res.body.ref)
+    expect(row.amount).toBe(60)
   })
 })
