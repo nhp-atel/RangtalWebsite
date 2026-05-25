@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Logo from './Logo.jsx'
 import MemberLoginModal from './MemberLoginModal.jsx'
 
 const links = [
-  { label: 'Home', href: '#home' },
-  { label: 'Workshops', href: '#workshops' },
-  { label: 'Events', href: '#countdown' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#footer' },
+  { label: 'Home', to: '/' },
+  { label: 'Workshops', to: '/workshops' },
+  { label: 'Events', to: '/events' },
+  { label: 'Gallery', to: '/gallery' },
+  { label: 'About', to: '/about' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [memberOpen, setMemberOpen] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -23,6 +24,15 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const goContact = () => {
+    setOpen(false)
+    const scroll = () =>
+      document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' })
+    // ensure the footer exists on the current view, then scroll
+    scroll()
+    setTimeout(scroll, 50)
+  }
 
   return (
     <>
@@ -44,32 +54,53 @@ export default function Navbar() {
           >
             <Logo />
 
-            <nav className="hidden items-center gap-1 lg:flex">
+            <nav className="hidden items-center gap-0.5 md:flex">
               {links.map((l) => (
-                <a
+                <NavLink
                   key={l.label}
-                  href={l.href}
-                  className="group relative rounded-full px-4 py-2 text-sm font-medium text-cream/80 transition hover:text-cream"
+                  to={l.to}
+                  end={l.to === '/'}
+                  className={({ isActive }) =>
+                    `group relative rounded-full px-3 py-2 text-sm font-medium transition ${
+                      isActive ? 'text-gold' : 'text-cream/80 hover:text-cream'
+                    }`
+                  }
                 >
-                  <span className="relative z-10">{l.label}</span>
-                  <span className="absolute inset-0 -z-0 scale-90 rounded-full bg-cream/[0.05] opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100" />
-                </a>
+                  {({ isActive }) => (
+                    <>
+                      <span className="relative z-10">{l.label}</span>
+                      <span
+                        className={`absolute inset-0 -z-0 scale-90 rounded-full bg-cream/[0.06] transition-all duration-300 group-hover:scale-100 group-hover:opacity-100 ${
+                          isActive ? 'scale-100 opacity-100 !bg-gold/10' : 'opacity-0'
+                        }`}
+                      />
+                    </>
+                  )}
+                </NavLink>
               ))}
+              <button
+                onClick={goContact}
+                className="group relative rounded-full px-3 py-2 text-sm font-medium text-cream/80 transition hover:text-cream"
+              >
+                <span className="relative z-10">Contact</span>
+                <span className="absolute inset-0 -z-0 scale-90 rounded-full bg-cream/[0.06] opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100" />
+              </button>
             </nav>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setMemberOpen(true)}
-                className="hidden items-center gap-2 rounded-full border border-cream/20 bg-cream/[0.04] px-4 py-2.5 text-[0.78rem] font-medium text-cream/90 transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream lg:inline-flex"
+                aria-label="Member login"
+                className="hidden items-center gap-2 rounded-full border border-cream/20 bg-cream/[0.04] px-3 py-2.5 text-[0.78rem] font-medium text-cream/90 transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream md:inline-flex lg:px-4"
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                   <path d="M6 10V8a6 6 0 1 1 12 0v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   <rect x="4" y="10" width="16" height="10" rx="2.5" stroke="currentColor" strokeWidth="2" />
                 </svg>
-                Members
+                <span className="hidden lg:inline">Members</span>
               </button>
-              <a
-                href="#register"
+              <Link
+                to="/register"
                 className="hidden btn-primary !py-2.5 !px-5 !text-[0.78rem] sm:inline-flex"
               >
                 Register Now
@@ -82,11 +113,11 @@ export default function Navbar() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </Link>
               <button
                 aria-label="Open menu"
                 onClick={() => setOpen(true)}
-                className="grid h-10 w-10 place-items-center rounded-full border border-cream/15 text-cream/90 transition hover:border-gold/60 hover:text-gold lg:hidden"
+                className="grid h-10 w-10 place-items-center rounded-full border border-cream/15 text-cream/90 transition hover:border-gold/60 hover:text-gold md:hidden"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -130,26 +161,44 @@ export default function Navbar() {
 
               <nav className="mt-12 flex flex-1 flex-col gap-1">
                 {links.map((l, i) => (
-                  <motion.a
+                  <motion.div
                     key={l.label}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + i * 0.06 }}
-                    className="group flex items-center justify-between border-b border-cream/10 py-5 text-2xl font-medium text-cream/90 transition hover:text-gold"
                   >
-                    <span className="display-serif">{l.label}</span>
-                    <span className="text-gold/60 transition group-hover:translate-x-1 group-hover:text-gold">
-                      →
-                    </span>
-                  </motion.a>
+                    <NavLink
+                      to={l.to}
+                      end={l.to === '/'}
+                      onClick={() => setOpen(false)}
+                      className={({ isActive }) =>
+                        `group flex items-center justify-between border-b border-cream/10 py-5 text-2xl font-medium transition ${
+                          isActive ? 'text-gold' : 'text-cream/90 hover:text-gold'
+                        }`
+                      }
+                    >
+                      <span className="display-serif">{l.label}</span>
+                      <span className="text-gold/60 transition group-hover:translate-x-1 group-hover:text-gold">
+                        →
+                      </span>
+                    </NavLink>
+                  </motion.div>
                 ))}
+                <motion.button
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + links.length * 0.06 }}
+                  onClick={goContact}
+                  className="group flex items-center justify-between border-b border-cream/10 py-5 text-left text-2xl font-medium text-cream/90 transition hover:text-gold"
+                >
+                  <span className="display-serif">Contact</span>
+                  <span className="text-gold/60 transition group-hover:translate-x-1 group-hover:text-gold">→</span>
+                </motion.button>
               </nav>
 
-              <a href="#register" onClick={() => setOpen(false)} className="btn-primary mt-6 w-full justify-center">
+              <Link to="/register" onClick={() => setOpen(false)} className="btn-primary mt-6 w-full justify-center">
                 Register Now
-              </a>
+              </Link>
               <button
                 onClick={() => {
                   setOpen(false)

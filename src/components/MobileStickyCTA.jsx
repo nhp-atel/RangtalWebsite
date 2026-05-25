@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function MobileStickyCTA() {
@@ -24,12 +25,12 @@ export default function MobileStickyCTA() {
           <span className="text-sm font-medium text-cream">
             Ready to dance?
           </span>
-          <a
-            href="#register"
+          <Link
+            to="/register"
             className="rounded-full bg-gradient-to-r from-gold to-marigold px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-navy-900"
           >
             Join Now
-          </a>
+          </Link>
         </motion.div>
       )}
     </AnimatePresence>

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const pillars = [
   { k: 'Preserve', d: 'Hold space for songs and steps passed down for generations.' },
@@ -181,10 +182,15 @@ export default function About() {
             </div>
 
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <a href="#community" className="btn-ghost">Read manifesto</a>
-              <a href="#workshops" className="text-sm text-cream/70 hover:text-gold underline-offset-4 hover:underline">
-                See where we teach →
-              </a>
+              <button
+                onClick={() => document.getElementById('community')?.scrollIntoView({ behavior: 'smooth' })}
+                className="btn-ghost"
+              >
+                Why people join
+              </button>
+              <Link to="/workshops" className="text-sm text-cream/70 hover:text-gold underline-offset-4 hover:underline">
+                See the class →
+              </Link>
             </div>
           </div>
         </div>

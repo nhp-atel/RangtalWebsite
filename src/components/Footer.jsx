@@ -1,29 +1,29 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Logo from './Logo.jsx'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/rangtaal_'
 
 const links = {
   Explore: [
-    { label: 'Workshops', href: '#workshops' },
-    { label: 'Events', href: '#countdown' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'About', href: '#about' },
-    { label: 'Register', href: '#register' },
+    { label: 'Workshops', to: '/workshops' },
+    { label: 'Events', to: '/events' },
+    { label: 'Gallery', to: '/gallery' },
+    { label: 'About', to: '/about' },
+    { label: 'Register', to: '/register' },
   ],
   Programs: [
-    { label: 'June Batch', href: '#workshops' },
-    { label: 'Register', href: '#register' },
-    { label: 'Navratri Nights', href: '#countdown' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'Our story', href: '#about' },
+    { label: 'June Batch', to: '/workshops' },
+    { label: 'Register', to: '/register' },
+    { label: 'Navratri Nights', to: '/events' },
+    { label: 'Gallery', to: '/gallery' },
+    { label: 'Our story', to: '/about' },
   ],
   Company: [
-    { label: 'Our story', href: '#about' },
-    { label: 'Instagram', href: INSTAGRAM_URL },
-    { label: 'Contact', href: '#footer' },
-    { label: 'Code of conduct', href: '#' },
-    { label: 'Refund policy', href: '#' },
+    { label: 'Our story', to: '/about' },
+    { label: 'Instagram', ext: INSTAGRAM_URL },
+    { label: 'Code of conduct', to: '/register' },
+    { label: 'Refund policy', to: '/register' },
   ],
 }
 
@@ -99,7 +99,9 @@ export default function Footer() {
                   <a
                     key={s.l}
                     href={s.href}
-                    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    {...(external
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : { onClick: (e) => e.preventDefault() })}
                     aria-label={s.l}
                     className="grid h-10 w-10 place-items-center rounded-full border border-cream/15 text-cream/80 transition hover:border-gold/60 hover:bg-gold/10 hover:text-gold"
                   >
@@ -118,20 +120,24 @@ export default function Footer() {
             <div key={cat} className="col-span-6 md:col-span-4 lg:col-span-2">
               <p className="text-[0.6rem] uppercase tracking-[0.42em] text-gold/80">{cat}</p>
               <ul className="mt-5 space-y-3 text-sm text-cream/70">
-                {items.map((it) => {
-                  const external = it.href.startsWith('http')
-                  return (
-                    <li key={it.label}>
+                {items.map((it) => (
+                  <li key={it.label}>
+                    {it.ext ? (
                       <a
-                        href={it.href}
-                        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        href={it.ext}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="transition hover:text-gold"
                       >
                         {it.label}
                       </a>
-                    </li>
-                  )
-                })}
+                    ) : (
+                      <Link to={it.to} className="transition hover:text-gold">
+                        {it.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
@@ -207,9 +213,9 @@ export default function Footer() {
         <div className="flex flex-col items-start justify-between gap-3 border-t border-cream/10 py-6 text-xs text-cream/45 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Rangtaal. Made with rhythm in Naperville, IL.</p>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-cream">Privacy</a>
-            <a href="#" className="hover:text-cream">Terms</a>
-            <a href="#" className="hover:text-cream">Cookies</a>
+            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-cream">Privacy</a>
+            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-cream">Terms</a>
+            <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-cream">Cookies</a>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const STEPS = ['Batch', 'Level', 'Details', 'Conduct', 'Payment', 'Confirm']
@@ -58,7 +58,7 @@ const LEVELS = [
 const AGE_GROUPS = ['6—12', '13—17', '18—25', '26—40', '40+']
 
 const initial = {
-  workshop: null,
+  workshop: WORKSHOPS.length === 1 ? WORKSHOPS[0].id : null,
   level: null,
   fullName: '',
   email: '',
@@ -133,19 +133,6 @@ export default function Registration() {
   const [step, setStep] = useState(0)
   const [data, setData] = useState(initial)
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }))
-
-  // Preselect a batch when the user clicks through from the Workshops section.
-  useEffect(() => {
-    const handler = (e) => {
-      const id = e.detail
-      if (WORKSHOPS.some((w) => w.id === id)) {
-        setData((d) => ({ ...d, workshop: id }))
-        setStep(0)
-      }
-    }
-    window.addEventListener('rangtaal:selectBatch', handler)
-    return () => window.removeEventListener('rangtaal:selectBatch', handler)
-  }, [])
 
   const chosenWs = useMemo(() => WORKSHOPS.find((w) => w.id === data.workshop), [data.workshop])
   const total = chosenWs ? chosenWs.price : 0
@@ -691,7 +678,7 @@ export default function Registration() {
                 <p className="text-xs uppercase tracking-[0.32em] text-cream/55">Questions?</p>
                 <p className="display-serif mt-2 text-lg text-cream">WhatsApp us</p>
                 <p className="mt-1 text-xs text-cream/55">(630) 555-0150 · 10am – 8pm CT</p>
-                <a href="#" className="mt-3 inline-flex items-center gap-2 text-xs text-gold hover:text-cream">
+                <a href="#" onClick={(e) => e.preventDefault()} className="mt-3 inline-flex items-center gap-2 text-xs text-gold hover:text-cream">
                   Open chat <span>→</span>
                 </a>
               </div>

@@ -201,13 +201,18 @@ export default function MemberLoginModal({ open, onClose }) {
                     member roll. If you’ve paid for the month, message us and we’ll
                     add you within a day.
                   </p>
-                  <a
-                    href="#footer"
-                    onClick={onClose}
+                  <button
+                    onClick={() => {
+                      onClose?.()
+                      setTimeout(
+                        () => document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' }),
+                        60
+                      )
+                    }}
                     className="btn-ghost mt-6 w-full justify-center"
                   >
                     Contact us to get added
-                  </a>
+                  </button>
                   <button
                     onClick={() => setUser(null)}
                     className="mt-4 w-full text-center text-xs uppercase tracking-[0.3em] text-cream/45 hover:text-cream"

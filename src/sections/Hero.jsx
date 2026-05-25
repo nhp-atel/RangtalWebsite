@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Particles from '../components/Particles.jsx'
 import HeroArtwork from '../components/HeroArtwork.jsx'
 
@@ -97,19 +98,19 @@ export default function Hero() {
               transition={{ delay: 1.3, duration: 0.8 }}
               className="mt-9 flex flex-wrap items-center gap-4"
             >
-              <a href="#workshops" className="btn-primary">
+              <Link to="/workshops" className="btn-primary">
                 Join Workshops
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
-              <a href="#countdown" className="btn-ghost">
+              </Link>
+              <Link to="/events" className="btn-ghost">
                 <span className="relative grid h-2 w-2 place-items-center">
                   <span className="absolute h-2 w-2 animate-ping rounded-full bg-gold/70" />
                   <span className="h-2 w-2 rounded-full bg-gold" />
                 </span>
                 Upcoming Events
-              </a>
+              </Link>
             </motion.div>
 
             {/* Trust strip / proof */}

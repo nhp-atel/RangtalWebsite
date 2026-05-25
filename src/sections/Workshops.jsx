@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 // One class — every Tuesday, 7:30–9:30 PM. Currently just the June batch.
 const SCHEDULE = 'Every Tuesday · 7:30 – 9:30 PM'
@@ -21,13 +22,6 @@ const workshops = [
 ]
 
 const featured = workshops.find((w) => w.status === 'open')
-
-// Preselect a batch in the registration flow and scroll to it.
-function selectBatch(id) {
-  window.dispatchEvent(new CustomEvent('rangtaal:selectBatch', { detail: id }))
-  const el = document.getElementById('register')
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
 
 function Motif({ name, color = '#F4B942' }) {
   if (name === 'lotus')
@@ -175,12 +169,12 @@ function FeaturedBatch({ ws }) {
         </div>
 
         <div className="mt-6 flex flex-wrap items-center gap-4">
-          <button onClick={() => selectBatch(ws.id)} className="btn-primary">
+          <Link to="/register" className="btn-primary">
             Reserve your spot
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </button>
+          </Link>
           <span className="text-xs uppercase tracking-[0.28em] text-cream/45">
             All levels welcome
           </span>

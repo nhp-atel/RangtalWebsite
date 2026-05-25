@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const stories = [
   {
@@ -189,12 +190,12 @@ export default function Community() {
                 Join the circle — every Tuesday, 7:30 PM. Just $60 for the month.
               </h3>
             </div>
-            <a href="#register" className="btn-primary whitespace-nowrap">
+            <Link to="/register" className="btn-primary whitespace-nowrap">
               Reserve a Spot
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>
