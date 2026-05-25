@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Link, useNavigate } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Logo from './Logo.jsx'
 import MemberLoginModal from './MemberLoginModal.jsx'
@@ -10,13 +10,13 @@ const links = [
   { label: 'Events', to: '/events' },
   { label: 'Gallery', to: '/gallery' },
   { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [memberOpen, setMemberOpen] = useState(false)
-  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -24,15 +24,6 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  const goContact = () => {
-    setOpen(false)
-    const scroll = () =>
-      document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' })
-    // ensure the footer exists on the current view, then scroll
-    scroll()
-    setTimeout(scroll, 50)
-  }
 
   return (
     <>
@@ -78,13 +69,6 @@ export default function Navbar() {
                   )}
                 </NavLink>
               ))}
-              <button
-                onClick={goContact}
-                className="group relative rounded-full px-3 py-2 text-sm font-medium text-cream/80 transition hover:text-cream"
-              >
-                <span className="relative z-10">Contact</span>
-                <span className="absolute inset-0 -z-0 scale-90 rounded-full bg-cream/[0.06] opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100" />
-              </button>
             </nav>
 
             <div className="flex items-center gap-2">
@@ -184,16 +168,6 @@ export default function Navbar() {
                     </NavLink>
                   </motion.div>
                 ))}
-                <motion.button
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + links.length * 0.06 }}
-                  onClick={goContact}
-                  className="group flex items-center justify-between border-b border-cream/10 py-5 text-left text-2xl font-medium text-cream/90 transition hover:text-gold"
-                >
-                  <span className="display-serif">Contact</span>
-                  <span className="text-gold/60 transition group-hover:translate-x-1 group-hover:text-gold">→</span>
-                </motion.button>
               </nav>
 
               <Link to="/register" onClick={() => setOpen(false)} className="btn-primary mt-6 w-full justify-center">

@@ -151,10 +151,9 @@ export default function Community() {
         <div className="grid grid-cols-12 items-end gap-y-10">
           <div className="col-span-12 lg:col-span-7">
             <div className="section-label">Community · Why we dance</div>
-            <h2 className="display-serif mt-5 text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.95] tracking-tight text-cream">
-              People don’t come back for the <br />
-              <span className="gold-text-gradient italic">steps</span>. They come back for the{' '}
-              <span className="italic">circle.</span>
+            <h2 className="display-serif mt-5 text-balance text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[1.04] tracking-tight text-cream">
+              Echoes from{' '}
+              <span className="gold-text-gradient italic inline-block pb-2 pr-1">last Navratri</span>.
             </h2>
           </div>
           <div className="col-span-12 lg:col-span-4 lg:col-start-9 lg:pl-8">
@@ -184,7 +183,7 @@ export default function Community() {
           <div className="relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
               <div className="text-[0.65rem] uppercase tracking-[0.4em] text-gold/90">
-                Now enrolling · June Batch
+                Now enrolling · July & August
               </div>
               <h3 className="display-serif mt-3 text-2xl leading-tight text-cream md:text-3xl">
                 Join the circle — every Tuesday, 7:30 PM. Just $60 for the month.

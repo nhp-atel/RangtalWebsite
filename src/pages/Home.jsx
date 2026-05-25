@@ -6,8 +6,8 @@ const explore = [
   {
     to: '/workshops',
     kicker: 'Workshops',
-    title: 'Join the June circle',
-    blurb: 'One class, every Tuesday, 7:30–9:30 PM. All levels — just $60 for the month.',
+    title: 'Join the circle',
+    blurb: 'One class, every Tuesday, 7:30–9:30 PM. July & August open now — all levels, $60 for the month.',
     palette: 'from-[#5A189A] via-[#7B2CBF] to-[#FF4D8D]',
   },
   {
@@ -106,7 +106,7 @@ export default function Home() {
             <div className="relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
               <div>
                 <div className="text-[0.65rem] uppercase tracking-[0.4em] text-gold/90">
-                  June batch · open now
+                  July & August · open now
                 </div>
                 <h3 className="display-serif mt-3 text-2xl leading-tight text-cream md:text-3xl">
                   Ready to dance? Save your spot in the circle.

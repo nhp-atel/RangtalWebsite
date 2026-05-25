@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   GOOGLE_CLIENT_ID,
@@ -23,6 +24,7 @@ function decodeJwt(token) {
 }
 
 export default function MemberLoginModal({ open, onClose }) {
+  const navigate = useNavigate()
   const btnRef = useRef(null)
   const [user, setUser] = useState(null) // { email, name, picture }
   const configured = isMemberAccessConfigured()
@@ -204,10 +206,7 @@ export default function MemberLoginModal({ open, onClose }) {
                   <button
                     onClick={() => {
                       onClose?.()
-                      setTimeout(
-                        () => document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' }),
-                        60
-                      )
+                      navigate('/contact')
                     }}
                     className="btn-ghost mt-6 w-full justify-center"
                   >

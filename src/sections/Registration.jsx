@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const STEPS = ['Batch', 'Level', 'Details', 'Conduct', 'Payment', 'Confirm']
@@ -22,9 +23,10 @@ const CONDUCT = [
   },
 ]
 
-// One class, every Tuesday 7:30–9:30 PM — currently just the June batch.
+// One class, every Tuesday 7:30–9:30 PM. May & June sold out; July & August open.
 const WORKSHOPS = [
-  { id: 'june', name: 'June Batch', date: 'Tuesdays · 7:30 – 9:30 PM', price: 60, color: '#7B2CBF', tag: 'Open now' },
+  { id: 'july', name: 'July Batch', date: 'Tuesdays · 7:30 – 9:30 PM', price: 60, color: '#F4B942', tag: 'Open now' },
+  { id: 'august', name: 'August Batch', date: 'Tuesdays · 7:30 – 9:30 PM', price: 60, color: '#FF4D8D', tag: 'Open now' },
 ]
 
 // --- Google Form integration ---------------------------------------------
@@ -133,6 +135,15 @@ export default function Registration() {
   const [step, setStep] = useState(0)
   const [data, setData] = useState(initial)
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }))
+  const location = useLocation()
+
+  // Preselect the batch the user clicked "Reserve" on (passed via router state).
+  useEffect(() => {
+    const batch = location.state?.batch
+    if (batch && WORKSHOPS.some((w) => w.id === batch)) {
+      setData((d) => ({ ...d, workshop: batch }))
+    }
+  }, [location.state])
 
   const chosenWs = useMemo(() => WORKSHOPS.find((w) => w.id === data.workshop), [data.workshop])
   const total = chosenWs ? chosenWs.price : 0

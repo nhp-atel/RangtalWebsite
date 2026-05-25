@@ -19,11 +19,28 @@ export default function LoadingScreen({ onDone }) {
   )
 
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 2800)
-    const t2 = setTimeout(() => onDone?.(), 3600)
+    const MIN = 600 // brief minimum so the brand registers without flashing
+    const MAX = 1400 // hard cap — never make people wait longer than this
+    const FADE = 400
+    const start = performance.now()
+    let finished = false
+    const timers = []
+
+    const finish = () => {
+      if (finished) return
+      finished = true
+      const wait = Math.max(0, MIN - (performance.now() - start))
+      timers.push(setTimeout(() => setDone(true), wait))
+      timers.push(setTimeout(() => onDone?.(), wait + FADE))
+    }
+
+    if (document.readyState === 'complete') finish()
+    else window.addEventListener('load', finish, { once: true })
+    timers.push(setTimeout(finish, MAX))
+
     return () => {
-      clearTimeout(t)
-      clearTimeout(t2)
+      window.removeEventListener('load', finish)
+      timers.forEach(clearTimeout)
     }
   }, [onDone])
 
@@ -33,7 +50,7 @@ export default function LoadingScreen({ onDone }) {
       initial={{ opacity: 1 }}
       animate={done ? { opacity: 0 } : { opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1] }}
+      transition={{ duration: 0.4, ease: [0.65, 0, 0.35, 1] }}
     >
       {/* warm ambient gradient */}
       <div className="pointer-events-none absolute inset-0">
@@ -134,19 +151,20 @@ export default function LoadingScreen({ onDone }) {
           <motion.img
             src="/logo.png"
             alt="Rangtaal — feel the rhythm of garba"
-            initial={{ scale: 0.6, opacity: 0, rotate: -8 }}
+            initial={{ scale: 0.7, opacity: 0, rotate: -6 }}
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="relative h-[180px] w-[180px] rounded-full object-cover shadow-[0_20px_60px_-10px_rgba(247,127,0,0.6)] sm:h-[210px] sm:w-[210px]"
             draggable="false"
+            fetchpriority="high"
           />
         </div>
 
         {/* Tagline + loading bar */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 0.3, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 flex flex-col items-center"
         >
           <p className="text-[0.7rem] uppercase tracking-[0.48em] text-cream/75">
