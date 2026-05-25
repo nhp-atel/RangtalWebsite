@@ -74,4 +74,16 @@ describe('attendance API', () => {
     const res = await request(app).put('/api/admin/attendance').send({ registrationId: 1, date: '2026-07-07', present: true })
     expect(res.status).toBe(401)
   })
+
+  it('rejects a toggle missing the present flag', async () => {
+    const list = await agent.get('/api/admin/attendance?batch=july')
+    const id = list.body.candidates[0].id
+    const res = await agent.put('/api/admin/attendance').send({ registrationId: id, date: '2026-07-07' })
+    expect(res.status).toBe(400)
+  })
+
+  it('rejects attendance for a non-July batch', async () => {
+    const res = await agent.get('/api/admin/attendance?batch=august')
+    expect(res.status).toBe(400)
+  })
 })

@@ -14,8 +14,9 @@ export function attendanceRouter(db) {
   // GET /api/admin/attendance?batch=july
   router.get('/', requireAuth, (req, res) => {
     const batch = req.query.batch || 'july'
+    // Two tiers: reject truly unknown batches, then reject known batches that
+    // aren't wired for attendance yet. Only July has session dates today.
     if (!isValidBatch(batch)) return res.status(400).json({ error: 'Unknown batch.' })
-    // Attendance is only configured for July today (dates live in sessions.js).
     if (batch !== 'july') return res.status(400).json({ error: 'Attendance is only set up for July.' })
 
     const candidates = db
@@ -37,6 +38,9 @@ export function attendanceRouter(db) {
   router.put('/', requireAuth, (req, res) => {
     const { registrationId, date, present } = req.body || {}
     if (!isValidSessionDate(date)) return res.status(400).json({ error: 'Not a valid session date.' })
+    if (typeof present !== 'boolean') {
+      return res.status(400).json({ error: '`present` must be true or false.' })
+    }
 
     const reg = db.prepare('SELECT id, batch FROM registrations WHERE id = ?').get(Number(registrationId))
     if (!reg) return res.status(404).json({ error: 'Registrant not found.' })
