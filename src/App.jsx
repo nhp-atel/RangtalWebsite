@@ -14,6 +14,7 @@ const Community = lazy(() => import('./sections/Community.jsx'))
 const Countdown = lazy(() => import('./sections/Countdown.jsx'))
 const Registration = lazy(() => import('./sections/Registration.jsx'))
 const Contact = lazy(() => import('./sections/Contact.jsx'))
+const Admin = lazy(() => import('./pages/Admin.jsx'))
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -65,6 +66,7 @@ export default function App() {
               <Route path="/events" element={<Countdown />} />
               <Route path="/register" element={<Registration />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<Home />} />
             </Routes>
           </Suspense>
