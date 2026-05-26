@@ -93,7 +93,7 @@ export default function Navbar() {
               <button
                 onClick={() => setMemberOpen(true)}
                 aria-label="Member login"
-                className="inline-flex items-center gap-2 rounded-full border border-cream/20 bg-cream/[0.04] px-3 py-2.5 text-[0.78rem] font-medium text-cream/90 transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream lg:px-4"
+                className="hidden items-center gap-2 rounded-full border border-cream/20 bg-cream/[0.04] px-3 py-2.5 text-[0.78rem] font-medium text-cream/90 transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream md:inline-flex lg:px-4"
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                   <path d="M6 10V8a6 6 0 1 1 12 0v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -131,6 +131,41 @@ export default function Navbar() {
               </button>
             </div>
           </div>
+
+          {/* Mobile quick nav — surface the key links; the rest live in the menu */}
+          <nav className="mt-2 flex items-center gap-2 md:hidden">
+            <NavLink
+              to="/workshops"
+              className={({ isActive }) =>
+                `flex-1 rounded-full border px-3 py-2 text-center text-[0.8rem] font-medium backdrop-blur-md transition ${
+                  isActive
+                    ? 'border-gold/50 bg-gold/10 text-gold'
+                    : 'border-cream/15 bg-cream/[0.05] text-cream/80'
+                }`
+              }
+            >
+              Workshops
+            </NavLink>
+            <NavLink
+              to="/gallery"
+              className={({ isActive }) =>
+                `flex-1 rounded-full border px-3 py-2 text-center text-[0.8rem] font-medium backdrop-blur-md transition ${
+                  isActive
+                    ? 'border-gold/50 bg-gold/10 text-gold'
+                    : 'border-cream/15 bg-cream/[0.05] text-cream/80'
+                }`
+              }
+            >
+              Gallery
+            </NavLink>
+            <button
+              type="button"
+              onClick={() => setMemberOpen(true)}
+              className="flex-1 rounded-full border border-cream/15 bg-cream/[0.05] px-3 py-2 text-center text-[0.8rem] font-medium text-cream/80 backdrop-blur-md transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream"
+            >
+              Members
+            </button>
+          </nav>
         </div>
       </motion.header>
 

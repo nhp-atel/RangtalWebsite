@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -122,6 +122,8 @@ export default function Registration() {
   const [submitError, setSubmitError] = useState('')
   const [refCode, setRefCode] = useState('')
   const location = useLocation()
+  const formRef = useRef(null)
+  const isFirstStep = useRef(true)
 
   // Preselect the batch the user clicked "Reserve" on (passed via router state).
   useEffect(() => {
@@ -130,6 +132,21 @@ export default function Registration() {
       setData((d) => ({ ...d, workshop: batch }))
     }
   }, [location.state])
+
+  // When the step changes, bring the form back to the top of the viewport so
+  // each step starts where the user expects — otherwise tall steps (Details)
+  // leave you scrolled mid-page and the next step's content (e.g. the Conduct
+  // agree checkbox) ends up far below the fold. Skip the very first render.
+  useEffect(() => {
+    if (isFirstStep.current) {
+      isFirstStep.current = false
+      return
+    }
+    const el = formRef.current
+    if (!el) return
+    const y = el.getBoundingClientRect().top + window.scrollY - 100
+    window.scrollTo({ top: y, behavior: 'smooth' })
+  }, [step])
 
   const chosenWs = useMemo(() => WORKSHOPS.find((w) => w.id === data.workshop), [data.workshop])
   const total = chosenWs ? chosenWs.price : 0
@@ -229,7 +246,10 @@ export default function Registration() {
         <div className="mt-14 grid grid-cols-12 gap-8">
           {/* MAIN FORM */}
           <div className="col-span-12 lg:col-span-8">
-            <div className="rounded-[28px] border border-cream/10 bg-gradient-to-br from-cream/[0.04] to-cream/[0.01] p-6 md:p-10">
+            <div
+              ref={formRef}
+              className="scroll-mt-28 rounded-[28px] border border-cream/10 bg-gradient-to-br from-cream/[0.04] to-cream/[0.01] p-6 md:p-10"
+            >
               <Stepper step={step} />
 
               <div className="mt-10 min-h-[440px]">
@@ -489,11 +509,11 @@ export default function Registration() {
                         A few house rules before we dance together. Please read and accept.
                       </p>
 
-                      <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                      <div className="mt-7 grid grid-cols-2 gap-3">
                         {CONDUCT.map((c, idx) => (
                           <div
                             key={c.title}
-                            className="rounded-2xl border border-cream/10 bg-cream/[0.03] p-5"
+                            className="rounded-2xl border border-cream/10 bg-cream/[0.03] p-4 md:p-5"
                           >
                             <div className="flex items-center gap-3">
                               <span className="grid h-7 w-7 place-items-center rounded-full bg-gold/15 text-xs font-bold text-gold">
