@@ -40,9 +40,9 @@ const stories = [
   },
   {
     word: 'Friendships',
-    sub: 'The ones you make in a circle tend to stay in your circle.',
+    sub: 'The best part of the circle isn’t the dancing — it’s the people you meet along the way.',
     quote:
-      'I’ve been Nik’s very first student since 2023. Every time he makes up a new step, he teaches me — and won’t let me leave until I get it right. Ever since I joined Rangtaal, I’ve found the friends I’d always been looking for.',
+      'I’ve been Nik’s very first student since 2023. Every time he comes up with a new step, I’m usually the one learning it first. He never lets me leave until I get it right. What started as a dance class became something much more. Through Rangtaal, I found friendships, confidence, and a community I genuinely look forward to being part of.',
     by: 'Nimesh · Nik’s first student, since 2023',
     color: '#FFD27A',
     layout: 'full',
