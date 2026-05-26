@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Logo from './Logo.jsx'
 import MemberLoginModal from './MemberLoginModal.jsx'
 
@@ -16,6 +16,8 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [memberOpen, setMemberOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const closeBtnRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -23,6 +25,20 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // While the mobile menu is open: lock body scroll, close on Esc, focus the
+  // close button so keyboard users land inside the overlay.
+  useEffect(() => {
+    if (!menuOpen) return
+    document.body.style.overflow = 'hidden'
+    closeBtnRef.current?.focus()
+    const onKey = (e) => e.key === 'Escape' && setMenuOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [menuOpen])
 
   return (
     <>
@@ -73,24 +89,6 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* Mobile nav — links shown directly in a swipeable strip (no hamburger) */}
-            <nav className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">
-              {links.map((l) => (
-                <NavLink
-                  key={l.label}
-                  to={l.to}
-                  end={l.to === '/'}
-                  className={({ isActive }) =>
-                    `shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition ${
-                      isActive ? 'bg-gold/15 text-gold' : 'text-cream/80 hover:text-cream'
-                    }`
-                  }
-                >
-                  {l.label}
-                </NavLink>
-              ))}
-            </nav>
-
             <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={() => setMemberOpen(true)}
@@ -118,10 +116,113 @@ export default function Navbar() {
                   />
                 </svg>
               </Link>
+
+              {/* Hamburger — opens the full-screen menu on mobile only */}
+              <button
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open menu"
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu"
+                className="grid h-11 w-11 place-items-center rounded-full border border-cream/20 bg-cream/[0.04] text-cream/90 transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream md:hidden"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </motion.header>
+
+      {/* Mobile full-screen menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[60] flex flex-col md:hidden"
+          >
+            {/* brand backdrop + glow */}
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#0b0a1e] to-navy-900" />
+            <div className="pointer-events-none absolute -top-20 right-0 -z-10 h-[45vh] w-[70vw] rounded-full bg-[radial-gradient(circle,rgba(90,24,154,0.45),transparent_70%)] blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-16 -z-10 h-[40vh] w-[70vw] rounded-full bg-[radial-gradient(circle,rgba(247,127,0,0.3),transparent_70%)] blur-3xl" />
+
+            {/* top row: logo + close */}
+            <div className="container-wide flex items-center justify-between py-5">
+              <Logo />
+              <button
+                ref={closeBtnRef}
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+                className="grid h-11 w-11 place-items-center rounded-full border border-cream/20 bg-cream/[0.04] text-cream/90 transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
+
+            {/* links */}
+            <nav className="container-wide flex flex-1 flex-col justify-center gap-1 pb-10">
+              {links.map((l, i) => (
+                <motion.div
+                  key={l.label}
+                  initial={{ opacity: 0, x: -24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.08 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <NavLink
+                    to={l.to}
+                    end={l.to === '/'}
+                    onClick={() => setMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `display-serif block py-2 text-4xl leading-tight transition ${
+                        isActive ? 'text-gold' : 'text-cream/85 hover:text-cream'
+                      }`
+                    }
+                  >
+                    {l.label}
+                  </NavLink>
+                </motion.div>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.08 + links.length * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-8 flex flex-col gap-3"
+              >
+                <Link
+                  to="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className="btn-primary justify-center !py-3.5"
+                >
+                  Register Now
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+                <button
+                  onClick={() => {
+                    setMenuOpen(false)
+                    setMemberOpen(true)
+                  }}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-cream/20 bg-cream/[0.04] py-3 text-sm font-medium text-cream/90 transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 10V8a6 6 0 1 1 12 0v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <rect x="4" y="10" width="16" height="10" rx="2.5" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                  Member login
+                </button>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <MemberLoginModal open={memberOpen} onClose={() => setMemberOpen(false)} />
     </>
