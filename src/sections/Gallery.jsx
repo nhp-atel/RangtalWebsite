@@ -24,7 +24,7 @@ const tiles = [
     photos: ['/GR7.jpg', '/GR3.jpg', '/GR1.jpg'],
   },
   { id: 6, src: '/GR5.jpg', title: 'On the Field', moment: 'Community Night', span: 'lg:col-span-6 h-[340px]' },
-  { id: 7, src: '/GR1.jpg', title: 'The Whole Circle', moment: 'The Rangtaal family', span: 'lg:col-span-12 h-[300px] lg:h-[440px]', pos: 'center 35%' },
+  { id: 7, src: '/GR1-circle.jpg', title: 'The Whole Circle', moment: 'The Rangtaal family', span: 'sm:col-span-12 lg:col-span-12 aspect-[1348/766]' },
 ]
 
 const COUNT = String(tiles.length).padStart(2, '0')
