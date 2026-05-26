@@ -1,7 +1,10 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/rangtaal_'
+
+// Reels we want to spotlight — just the shortcodes from the share links.
+const FEATURED_REELS = ['DWQMzlrjAzP', 'DWmPhp9kezn', 'DWUVtSIEdo8']
 
 // Real moments from Rangtaal — orientation-aware masonry.
 // GR4 is portrait (tall tile), GR6 is wide, the rest are landscape.
@@ -179,6 +182,59 @@ function CarouselTile({ tile, i }) {
   )
 }
 
+// Load Instagram's embed script once, then (re)render any blockquotes on the page.
+function useInstagramEmbeds() {
+  useEffect(() => {
+    const SRC = 'https://www.instagram.com/embed.js'
+    const process = () => window.instgrm?.Embeds?.process()
+    if (window.instgrm) {
+      process()
+      return
+    }
+    let script = document.querySelector(`script[src="${SRC}"]`)
+    if (!script) {
+      script = document.createElement('script')
+      script.src = SRC
+      script.async = true
+      document.body.appendChild(script)
+    }
+    script.addEventListener('load', process, { once: true })
+  }, [])
+}
+
+// Three spotlighted reels, embedded live, framed to sit on the dark canvas.
+function FeaturedReels() {
+  useInstagramEmbeds()
+
+  return (
+    <div className="mt-16">
+      <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-cream/55">
+        <span className="h-px w-10 bg-gold/60" />
+        Featured Reels
+      </div>
+      <div className="mt-6 grid grid-cols-1 items-start gap-5 lg:grid-cols-3">
+        {FEATURED_REELS.map((code, i) => (
+          <motion.div
+            key={code}
+            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden rounded-[22px] border border-cream/10 bg-cream/[0.03] p-2 shadow-xl shadow-black/30 backdrop-blur-sm"
+          >
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink={`https://www.instagram.com/reel/${code}/`}
+              data-instgrm-version="14"
+              style={{ margin: 0, width: '100%', minWidth: 0, background: 'transparent', border: 0 }}
+            />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Gallery() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
@@ -247,6 +303,9 @@ export default function Gallery() {
             Tag us to be featured <span className="text-gold">→</span>
           </a>
         </div>
+
+        {/* Spotlighted Instagram reels */}
+        <FeaturedReels />
       </div>
     </section>
   )
