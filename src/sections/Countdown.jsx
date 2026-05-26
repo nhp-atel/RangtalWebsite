@@ -175,15 +175,11 @@ export default function Countdown() {
             <div className="section-label">Navratri 2026 · Sharad</div>
             <h2 className="display-serif mt-5 text-[clamp(2.6rem,6vw,5.6rem)] font-medium leading-[0.95] tracking-tight text-cream">
               Navratri begins in
-              <br />
-              <span className="gold-text-gradient italic">nine nights</span> of pure rhythm.
             </h2>
           </div>
           <div className="col-span-12 lg:col-span-4 lg:col-start-9">
             <p className="text-base leading-relaxed text-cream/70">
-              The biggest, longest, most beautiful Garba season of the year.
-              We open the venue, the kitchen, and the dance floor for nine
-              uninterrupted nights — Oct 11 to Oct 19, 2026.
+              The 2026 Navratri will be from Oct 11 to Oct 19.
             </p>
           </div>
         </div>
