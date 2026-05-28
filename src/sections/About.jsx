@@ -140,10 +140,10 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex items-center gap-6"
+              className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6"
             >
               <div className="relative shrink-0">
-                <div className="relative aspect-[3/4] w-28 overflow-hidden rounded-2xl border border-cream/15 bg-navy-900 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85)] sm:w-32">
+                <div className="relative aspect-[3/4] w-24 overflow-hidden rounded-2xl border border-cream/15 bg-navy-900 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85)] sm:w-32">
                   <img
                     src="/nik-patel.jpg"
                     alt="Nik Patel, founder of Rangtaal, in traditional Garba attire mid-dance"
@@ -156,7 +156,7 @@ export default function About() {
                 {/* warm glow behind the portrait */}
                 <div className="absolute -inset-3 -z-10 rounded-3xl bg-[radial-gradient(circle,rgba(247,127,0,0.4),transparent_70%)] blur-xl" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="section-label">Meet the founder</div>
                 <p className="display-serif mt-2 text-3xl font-medium leading-none text-cream">
                   Nik Patel
