@@ -9,10 +9,10 @@ const FEATURED_REELS = ['DWQMzlrjAzP', 'DWmPhp9kezn', 'DWUVtSIEdo8']
 // Real moments from Rangtaal — orientation-aware masonry.
 // GR4 is portrait (tall tile), GR6 is wide, the rest are landscape.
 const tiles = [
-  { id: 1, src: '/GR4.jpg', title: 'Under the Lights', moment: 'Garba Night', span: 'lg:col-span-4 lg:row-span-2 h-[440px] lg:h-[620px]' },
-  { id: 2, src: '/GR2.jpg', title: 'Festival Lights', moment: 'Navratri Night', span: 'lg:col-span-8 h-[300px]' },
-  { id: 3, src: '/GR3.jpg', title: 'Dressed to Dance', moment: 'Before the Circle', span: 'lg:col-span-4 h-[300px]' },
-  { id: 4, src: '/GR6.jpg', title: 'The Big Floor', moment: 'Navratri Crowd', span: 'lg:col-span-4 h-[300px]' },
+  { id: 1, src: '/GR4.webp', title: 'Under the Lights', moment: 'Garba Night', span: 'lg:col-span-4 lg:row-span-2 h-[440px] lg:h-[620px]' },
+  { id: 2, src: '/GR2.webp', title: 'Festival Lights', moment: 'Navratri Night', span: 'lg:col-span-8 h-[300px]' },
+  { id: 3, src: '/GR3.webp', title: 'Dressed to Dance', moment: 'Before the Circle', span: 'lg:col-span-4 h-[300px]' },
+  { id: 4, src: '/GR6.webp', title: 'The Big Floor', moment: 'Navratri Crowd', span: 'lg:col-span-4 h-[300px]' },
   {
     id: 5,
     title: 'Faces of Rangtaal',
@@ -21,10 +21,10 @@ const tiles = [
     pos: 'center 35%',
     // Multiple people — swipe/scroll through them. Stand-ins for now:
     // drop more face shots into /public and add their paths to this list.
-    photos: ['/GR7.jpg', '/GR3.jpg', '/GR1.jpg'],
+    photos: ['/GR7.webp', '/GR3.webp', '/GR1.webp'],
   },
-  { id: 6, src: '/GR5.jpg', title: 'On the Field', moment: 'Community Night', span: 'lg:col-span-6 h-[340px]' },
-  { id: 7, src: '/GR1-circle.jpg', title: 'The Whole Circle', moment: 'The Rangtaal family', span: 'sm:col-span-12 lg:col-span-12 aspect-[1348/766]' },
+  { id: 6, src: '/GR5.webp', title: 'On the Field', moment: 'Community Night', span: 'lg:col-span-6 h-[340px]' },
+  { id: 7, src: '/GR1-circle.webp', title: 'The Whole Circle', moment: 'The Rangtaal family', span: 'sm:col-span-12 lg:col-span-12 aspect-[1348/766]' },
 ]
 
 const COUNT = String(tiles.length).padStart(2, '0')
