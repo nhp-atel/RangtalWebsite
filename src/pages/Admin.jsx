@@ -105,18 +105,18 @@ export default function Admin() {
   }
 
   return (
-    <section className="min-h-screen bg-navy-900 px-5 py-12 md:px-10">
+    <section className="min-h-screen bg-navy-900 px-4 pb-16 pt-28 sm:px-5 sm:pt-32 md:px-10 md:py-12">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <div className="section-label">Team area</div>
             <h1 className="display-serif mt-2 text-3xl text-cream">Registrations</h1>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             {tab === 'registrations' && (
-              <a href={`/api/admin/export.csv${query()}`} className="btn-ghost">Export CSV</a>
+              <a href={`/api/admin/export.csv${query()}`} className="btn-ghost !px-4 !py-2 text-xs sm:!px-7 sm:!py-3.5 sm:text-sm">Export CSV</a>
             )}
-            <button onClick={logout} className="btn-ghost">Log out</button>
+            <button onClick={logout} className="btn-ghost !px-4 !py-2 text-xs sm:!px-7 sm:!py-3.5 sm:text-sm">Log out</button>
           </div>
         </div>
 
@@ -153,30 +153,135 @@ export default function Admin() {
         </div>
 
         {/* filters */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search name or email…"
-            className="w-full max-w-xs rounded-xl border border-cream/15 bg-cream/[0.04] px-4 py-2.5 text-sm text-cream outline-none focus:border-gold/60"
+            className="col-span-2 w-full rounded-xl border border-cream/15 bg-cream/[0.04] px-4 py-2.5 text-sm text-cream outline-none focus:border-gold/60 sm:max-w-xs"
           />
           <select value={batch} onChange={(e) => setBatch(e.target.value)}
-            className="rounded-xl border border-cream/15 bg-navy-800 px-4 py-2.5 text-sm text-cream outline-none focus:border-gold/60">
+            className="w-full rounded-xl border border-cream/15 bg-navy-800 px-3 py-2.5 text-sm text-cream outline-none focus:border-gold/60 sm:w-auto sm:px-4">
             <option value="">All batches</option>
             <option value="july">July</option>
             <option value="august">August</option>
           </select>
           <select value={paid} onChange={(e) => setPaid(e.target.value)}
-            className="rounded-xl border border-cream/15 bg-navy-800 px-4 py-2.5 text-sm text-cream outline-none focus:border-gold/60">
+            className="w-full rounded-xl border border-cream/15 bg-navy-800 px-3 py-2.5 text-sm text-cream outline-none focus:border-gold/60 sm:w-auto sm:px-4">
             <option value="">Paid + Unpaid</option>
             <option value="true">Paid only</option>
             <option value="false">Unpaid only</option>
           </select>
-          {loading && <span className="text-xs text-cream/50">Loading…</span>}
+          {loading && <span className="col-span-2 text-xs text-cream/50">Loading…</span>}
         </div>
 
-        {/* table */}
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-cream/10">
+        {/* Mobile cards — below md */}
+        <div className="mt-6 grid gap-3 md:hidden">
+          {rows.map((r) => {
+            const isOpen = expanded === r.id
+            return (
+              <article
+                key={r.id}
+                className={`rounded-2xl border bg-cream/[0.03] p-4 transition ${
+                  r.paid ? 'border-gold/30' : 'border-cream/10'
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <button
+                      onClick={() => setExpanded(isOpen ? null : r.id)}
+                      className="block w-full truncate text-left text-base font-semibold text-cream hover:text-gold"
+                    >
+                      {r.full_name}
+                    </button>
+                    {r.guardian && (
+                      <span className="mt-1 inline-flex items-center gap-1.5 rounded bg-gold/15 px-2 py-0.5 text-[0.55rem] font-semibold uppercase tracking-wide text-gold">
+                        Minor · Guardian: {r.guardian}
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => togglePaid(r)}
+                    aria-label={r.paid ? 'Mark unpaid' : 'Mark paid'}
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] transition ${
+                      r.paid
+                        ? 'border-gold bg-gold text-navy-900'
+                        : 'border-cream/30 text-cream/75 hover:border-gold/60'
+                    }`}
+                  >
+                    {r.paid ? (
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    ) : (
+                      <span className="h-1.5 w-1.5 rounded-full bg-cream/50" />
+                    )}
+                    {r.paid ? 'Paid' : 'Unpaid'}
+                  </button>
+                </div>
+
+                <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <p className="text-[0.55rem] uppercase tracking-[0.22em] text-cream/45">Email</p>
+                    <p className="mt-0.5 break-all text-cream/80">{r.email}</p>
+                  </div>
+                  <div>
+                    <p className="text-[0.55rem] uppercase tracking-[0.22em] text-cream/45">Phone</p>
+                    <p className="mt-0.5 text-cream/80">{r.phone}</p>
+                  </div>
+                  <div>
+                    <p className="text-[0.55rem] uppercase tracking-[0.22em] text-cream/45">Batch</p>
+                    <p className="mt-0.5 text-cream/80">{BATCH_LABELS[r.batch] || r.batch}</p>
+                  </div>
+                  <div>
+                    <p className="text-[0.55rem] uppercase tracking-[0.22em] text-cream/45">Level</p>
+                    <p className="mt-0.5 text-cream/80">{r.level || '—'}</p>
+                  </div>
+                  <div>
+                    <p className="text-[0.55rem] uppercase tracking-[0.22em] text-cream/45">Age</p>
+                    <p className="mt-0.5 text-cream/80">{r.age_group || '—'}</p>
+                  </div>
+                  <div>
+                    <p className="text-[0.55rem] uppercase tracking-[0.22em] text-cream/45">Registered</p>
+                    <p className="mt-0.5 text-cream/80">
+                      {new Date(r.created_at).toLocaleString(undefined, {
+                        month: 'short', day: 'numeric',
+                        hour: 'numeric', minute: '2-digit',
+                      })}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setExpanded(isOpen ? null : r.id)}
+                  className="mt-3 inline-flex items-center gap-1.5 text-[0.62rem] uppercase tracking-[0.24em] text-gold hover:text-cream"
+                >
+                  {isOpen ? 'Hide details' : 'More details'}
+                  <span>{isOpen ? '↑' : '↓'}</span>
+                </button>
+
+                {isOpen && (
+                  <div className="mt-3 space-y-1.5 border-t border-cream/10 pt-3 text-xs text-cream/70">
+                    <p><span className="text-cream/45">Ref:</span> {r.ref}</p>
+                    <p><span className="text-cream/45">Emergency:</span> {r.emergency || '—'}</p>
+                    <p><span className="text-cream/45">Guardian:</span> {r.guardian || '—'}</p>
+                    <p><span className="text-cream/45">Notes:</span> {r.notes || '—'}</p>
+                    {r.paid_at && <p><span className="text-cream/45">Paid at:</span> {new Date(r.paid_at).toLocaleString()}</p>}
+                  </div>
+                )}
+              </article>
+            )
+          })}
+          {rows.length === 0 && !loading && (
+            <p className="rounded-2xl border border-cream/10 bg-cream/[0.02] px-4 py-10 text-center text-cream/45">
+              No registrations match.
+            </p>
+          )}
+        </div>
+
+        {/* table — md and up */}
+        <div className="mt-6 hidden overflow-x-auto rounded-2xl border border-cream/10 md:block">
           <table className="w-full min-w-[760px] text-left text-sm">
             <thead className="bg-cream/[0.04] text-[0.62rem] uppercase tracking-[0.2em] text-cream/55">
               <tr>

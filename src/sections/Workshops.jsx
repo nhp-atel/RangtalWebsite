@@ -257,7 +257,7 @@ export default function Workshops() {
   const active = workshops.find((w) => w.id === selected) || workshops[0]
 
   return (
-    <section id="workshops" className="relative isolate overflow-hidden py-28">
+    <section id="workshops" className="relative isolate overflow-hidden pt-32 pb-20 sm:py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#0a0c1e] to-navy-900" />
       <div className="absolute top-1/3 left-0 h-[40vh] w-[40vw] -z-10 bg-[radial-gradient(circle,rgba(123,30,58,0.35),transparent_70%)] blur-3xl" />
       <div className="absolute bottom-0 right-0 h-[40vh] w-[40vw] -z-10 bg-[radial-gradient(circle,rgba(90,24,154,0.35),transparent_70%)] blur-3xl" />
@@ -282,7 +282,7 @@ export default function Workshops() {
         </div>
 
         {/* Month selector */}
-        <div className="mt-12 flex flex-wrap gap-3">
+        <div className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:flex sm:flex-wrap sm:gap-3">
           {workshops.map((w) => {
             const isActive = w.id === selected
             const sold = w.status === 'soldout'
@@ -291,7 +291,7 @@ export default function Workshops() {
                 key={w.id}
                 onClick={() => setSelected(w.id)}
                 aria-pressed={isActive}
-                className={`group relative flex items-center gap-3 rounded-2xl border px-5 py-3 transition ${
+                className={`group relative flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 transition sm:justify-start sm:px-5 ${
                   isActive
                     ? 'border-gold/60 bg-gold/10 shadow-[0_0_0_4px_rgba(244,185,66,0.08)]'
                     : 'border-cream/12 bg-cream/[0.03] hover:border-cream/30 hover:bg-cream/[0.06]'

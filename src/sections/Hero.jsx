@@ -18,7 +18,7 @@ const marqueeWords = [
 
 export default function Hero() {
   return (
-    <section id="home" className="relative isolate overflow-hidden pt-28 pb-20 lg:pt-36 lg:pb-28">
+    <section id="home" className="relative isolate overflow-hidden pt-36 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-28">
       {/* atmospheric backdrop */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-navy-900 via-[#10112d] to-navy-900" />
@@ -28,7 +28,7 @@ export default function Hero() {
 
         {/* ambient dandiya medallion — large, faint emblem filling the hero */}
         <div className="absolute inset-0 flex items-center justify-center lg:justify-end lg:pr-[2vw]">
-          <div className="relative aspect-square w-[130%] max-w-[860px] opacity-[0.28] sm:w-[96%] lg:w-[66%]">
+          <div className="relative aspect-square w-[110%] max-w-[860px] opacity-[0.22] sm:w-[96%] sm:opacity-[0.28] lg:w-[66%]">
             {/* warm glow behind the emblem */}
             <div className="absolute inset-[14%] rounded-full bg-[radial-gradient(circle,rgba(244,185,66,0.16),transparent_70%)] blur-2xl" />
             {/* slow orbiting ring */}
@@ -69,7 +69,7 @@ export default function Hero() {
             </motion.div>
 
             <div className="mt-6">
-              <h1 className="display-serif text-[clamp(2.8rem,7.2vw,6.4rem)] font-medium leading-[0.95] tracking-tight text-cream">
+              <h1 className="display-serif text-[clamp(2.5rem,11vw,6.4rem)] font-medium leading-[0.95] tracking-tight text-cream">
                 <motion.span
                   initial={{ opacity: 0, y: 60 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -138,31 +138,31 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.55, duration: 0.8 }}
-              className="mt-12 flex flex-wrap items-end gap-x-10 gap-y-6"
+              className="mt-12 grid grid-cols-3 items-end gap-x-4 gap-y-6 sm:flex sm:flex-wrap sm:gap-x-10"
             >
               <div>
-                <div className="display-serif text-4xl font-medium text-cream">
+                <div className="display-serif text-3xl font-medium leading-none text-cream sm:text-4xl">
                   150<span className="text-gold">+</span>
                 </div>
-                <p className="mt-1 text-xs uppercase tracking-[0.28em] text-cream/55">
+                <p className="mt-2 text-[0.65rem] uppercase tracking-[0.24em] text-cream/55 sm:text-xs sm:tracking-[0.28em]">
                   Dancers in our circle
                 </p>
               </div>
-              <div className="h-10 w-px bg-cream/15" />
+              <div className="hidden h-10 w-px bg-cream/15 sm:block" />
               <div>
-                <div className="display-serif text-4xl font-medium text-cream">
+                <div className="display-serif text-3xl font-medium leading-none text-cream sm:text-4xl">
                   8
                 </div>
-                <p className="mt-1 text-xs uppercase tracking-[0.28em] text-cream/55">
+                <p className="mt-2 text-[0.65rem] uppercase tracking-[0.24em] text-cream/55 sm:text-xs sm:tracking-[0.28em]">
                   Passionate instructors
                 </p>
               </div>
-              <div className="h-10 w-px bg-cream/15" />
+              <div className="hidden h-10 w-px bg-cream/15 sm:block" />
               <div>
-                <div className="display-serif text-4xl font-medium text-cream">
+                <div className="display-serif text-2xl font-medium leading-none text-cream sm:text-4xl">
                   Every Tue
                 </div>
-                <p className="mt-1 text-xs uppercase tracking-[0.28em] text-cream/55">
+                <p className="mt-2 text-[0.65rem] uppercase tracking-[0.24em] text-cream/55 sm:text-xs sm:tracking-[0.28em]">
                   7:30 – 9:30 PM CT
                 </p>
               </div>
@@ -183,7 +183,7 @@ export default function Hero() {
             {[...marqueeWords, ...marqueeWords, ...marqueeWords].map((w, i) => (
               <span
                 key={i}
-                className="display-serif text-4xl font-light tracking-tight text-cream/40 md:text-5xl"
+                className="display-serif text-3xl font-light tracking-tight text-cream/40 sm:text-4xl md:text-5xl"
               >
                 {w}
                 <span className="ml-12 inline-block translate-y-[-6px] text-gold/60">✦</span>

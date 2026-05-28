@@ -241,7 +241,7 @@ export default function Gallery() {
   const yParallax = useTransform(scrollYProgress, [0, 1], [60, -60])
 
   return (
-    <section id="gallery" ref={ref} className="relative isolate overflow-hidden py-28">
+    <section id="gallery" ref={ref} className="relative isolate overflow-hidden pt-32 pb-20 sm:py-28">
       {/* background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#120726] to-navy-900" />
       <motion.div

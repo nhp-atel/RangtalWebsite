@@ -137,7 +137,7 @@ export default function Navbar() {
             <NavLink
               to="/workshops"
               className={({ isActive }) =>
-                `flex-1 rounded-full border px-3 py-2 text-center text-[0.8rem] font-medium backdrop-blur-md transition ${
+                `flex-1 rounded-full border px-2 py-2 text-center text-[0.78rem] font-medium backdrop-blur-md transition ${
                   isActive
                     ? 'border-gold/50 bg-gold/10 text-gold'
                     : 'border-cream/15 bg-cream/[0.05] text-cream/80'
@@ -149,7 +149,7 @@ export default function Navbar() {
             <NavLink
               to="/gallery"
               className={({ isActive }) =>
-                `flex-1 rounded-full border px-3 py-2 text-center text-[0.8rem] font-medium backdrop-blur-md transition ${
+                `flex-1 rounded-full border px-2 py-2 text-center text-[0.78rem] font-medium backdrop-blur-md transition ${
                   isActive
                     ? 'border-gold/50 bg-gold/10 text-gold'
                     : 'border-cream/15 bg-cream/[0.05] text-cream/80'
@@ -158,13 +158,12 @@ export default function Navbar() {
             >
               Gallery
             </NavLink>
-            <button
-              type="button"
-              onClick={() => setMemberOpen(true)}
-              className="flex-1 rounded-full border border-cream/15 bg-cream/[0.05] px-3 py-2 text-center text-[0.8rem] font-medium text-cream/80 backdrop-blur-md transition hover:border-gold/60 hover:bg-gold/10 hover:text-cream"
+            <Link
+              to="/register"
+              className="flex-1 rounded-full border border-gold/50 bg-gold/15 px-2 py-2 text-center text-[0.78rem] font-semibold text-gold backdrop-blur-md transition hover:bg-gold/25"
             >
-              Members
-            </button>
+              Register
+            </Link>
           </nav>
         </div>
       </motion.header>
@@ -178,7 +177,11 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[60] flex flex-col md:hidden"
+            className="fixed inset-0 z-[60] flex flex-col overflow-y-auto md:hidden"
+            style={{
+              paddingTop: 'env(safe-area-inset-top)',
+              paddingBottom: 'env(safe-area-inset-bottom)',
+            }}
           >
             {/* brand backdrop + glow */}
             <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#0b0a1e] to-navy-900" />
@@ -214,7 +217,7 @@ export default function Navbar() {
                     end={l.to === '/'}
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
-                      `display-serif block py-2 text-4xl leading-tight transition ${
+                      `display-serif block py-2 text-[clamp(1.85rem,8vw,2.5rem)] leading-tight transition ${
                         isActive ? 'text-gold' : 'text-cream/85 hover:text-cream'
                       }`
                     }

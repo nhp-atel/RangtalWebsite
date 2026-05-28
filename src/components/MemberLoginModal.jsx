@@ -47,12 +47,14 @@ export default function MemberLoginModal({ open, onClose }) {
         },
       })
       btnRef.current.innerHTML = ''
+      // Cap button width to fit the smallest mobile modal (iPhone SE: ~240px inner).
+      const w = Math.min(280, btnRef.current.clientWidth || 240)
       window.google.accounts.id.renderButton(btnRef.current, {
         theme: 'filled_black',
         size: 'large',
         shape: 'pill',
         text: 'continue_with',
-        width: 280,
+        width: w,
       })
     }
 
@@ -91,7 +93,7 @@ export default function MemberLoginModal({ open, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[70] grid place-items-center bg-navy-900/85 p-5 backdrop-blur-2xl"
+          className="fixed inset-0 z-[70] grid place-items-center overflow-y-auto bg-navy-900/85 p-4 backdrop-blur-xl sm:p-5"
           onClick={onClose}
         >
           <motion.div
@@ -100,7 +102,7 @@ export default function MemberLoginModal({ open, onClose }) {
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 26, stiffness: 240 }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-md overflow-hidden rounded-[28px] border border-cream/15 bg-gradient-to-br from-navy-800 via-navy-900 to-[#1a0a1a] p-8 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]"
+            className="relative my-auto w-full max-w-md overflow-hidden rounded-[24px] border border-cream/15 bg-gradient-to-br from-navy-800 via-navy-900 to-[#1a0a1a] p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] sm:rounded-[28px] sm:p-8"
           >
             {/* glow */}
             <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gold/20 blur-3xl" />
@@ -108,7 +110,7 @@ export default function MemberLoginModal({ open, onClose }) {
             <button
               aria-label="Close"
               onClick={onClose}
-              className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full border border-cream/15 text-cream/80 transition hover:border-gold/60 hover:text-gold"
+              className="absolute right-3 top-3 grid h-11 w-11 place-items-center rounded-full border border-cream/15 text-cream/80 transition hover:border-gold/60 hover:text-gold sm:right-5 sm:top-5"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />

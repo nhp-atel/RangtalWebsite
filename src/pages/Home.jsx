@@ -39,7 +39,7 @@ export default function Home() {
       <Hero />
 
       {/* Explore — concise routing teaser */}
-      <section className="relative isolate overflow-hidden py-24">
+      <section className="relative isolate overflow-hidden py-20 sm:py-24">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#0b0a1e] to-navy-900" />
         <div className="absolute bottom-0 right-0 -z-10 h-[40vh] w-[40vw] bg-[radial-gradient(circle,rgba(90,24,154,0.3),transparent_70%)] blur-3xl" />
 

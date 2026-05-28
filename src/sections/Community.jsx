@@ -141,7 +141,7 @@ function StoryCard({ s, i }) {
 
 export default function Community() {
   return (
-    <section id="community" className="relative isolate overflow-hidden py-28">
+    <section id="community" className="relative isolate overflow-hidden pt-32 pb-20 sm:py-28">
       {/* background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#0c0a1f] to-navy-900" />
       <div className="absolute top-0 left-1/2 -z-10 h-[60vh] w-[100vw] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(123,30,58,0.3),transparent_70%)] blur-3xl" />

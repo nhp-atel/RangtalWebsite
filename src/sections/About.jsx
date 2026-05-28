@@ -10,7 +10,7 @@ const pillars = [
 
 export default function About() {
   return (
-    <section id="about" className="relative isolate overflow-hidden py-28">
+    <section id="about" className="relative isolate overflow-hidden pt-32 pb-20 sm:py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#0a0d22] to-navy-900" />
       <div className="absolute -left-32 top-0 -z-10 h-[60vh] w-[40vw] bg-[radial-gradient(circle,rgba(90,24,154,0.4),transparent_70%)] blur-3xl" />
       <div className="absolute -right-20 bottom-0 -z-10 h-[50vh] w-[40vw] bg-[radial-gradient(circle,rgba(244,185,66,0.25),transparent_70%)] blur-3xl" />
@@ -193,7 +193,7 @@ export default function About() {
             </motion.div>
 
             {/* pillars */}
-            <div className="mt-12 grid grid-cols-2 gap-5">
+            <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
               {pillars.map((p, i) => (
                 <motion.div
                   key={p.k}

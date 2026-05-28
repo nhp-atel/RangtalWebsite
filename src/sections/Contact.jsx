@@ -60,7 +60,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative isolate min-h-screen overflow-hidden pt-32 pb-24 lg:pt-40"
+      className="relative isolate min-h-screen overflow-hidden pt-36 pb-24 sm:pt-32 lg:pt-40"
     >
       {/* atmospheric backdrop */}
       <div className="pointer-events-none absolute inset-0 -z-10">

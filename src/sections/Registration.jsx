@@ -220,7 +220,7 @@ export default function Registration() {
   }
 
   return (
-    <section id="register" className="relative isolate overflow-hidden py-28">
+    <section id="register" className="relative isolate overflow-hidden pt-32 pb-20 sm:py-28">
       {/* background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#1a0930] via-navy-900 to-navy-900" />
       <div className="absolute -left-10 top-20 -z-10 h-[40vh] w-[40vw] bg-[radial-gradient(circle,rgba(123,30,58,0.4),transparent_70%)] blur-3xl" />
@@ -248,7 +248,7 @@ export default function Registration() {
           <div className="col-span-12 lg:col-span-8">
             <div
               ref={formRef}
-              className="scroll-mt-28 rounded-[28px] border border-cream/10 bg-gradient-to-br from-cream/[0.04] to-cream/[0.01] p-6 md:p-10"
+              className="scroll-mt-36 rounded-[28px] border border-cream/10 bg-gradient-to-br from-cream/[0.04] to-cream/[0.01] p-5 sm:p-6 md:p-10"
             >
               <Stepper step={step} />
 
@@ -278,23 +278,23 @@ export default function Registration() {
                               key={w.id}
                               type="button"
                               onClick={() => set('workshop', w.id)}
-                              className={`group flex items-center justify-between gap-4 rounded-2xl border p-5 text-left transition-all ${
+                              className={`group flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-2xl border p-4 text-left transition-all sm:p-5 ${
                                 selected
                                   ? 'border-gold/60 bg-gradient-to-r from-gold/10 to-transparent shadow-[0_0_0_4px_rgba(244,185,66,0.08)]'
                                   : 'border-cream/10 bg-cream/[0.03] hover:border-cream/30 hover:bg-cream/[0.06]'
                               }`}
                             >
-                              <div className="flex items-center gap-4">
+                              <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
                                 <span
-                                  className="grid h-12 w-12 place-items-center rounded-xl text-navy-900 font-display text-lg font-bold"
+                                  className="grid h-12 w-12 shrink-0 place-items-center rounded-xl text-navy-900 font-display text-lg font-bold"
                                   style={{
                                     background: `linear-gradient(135deg, ${w.color}, #7B1E3A)`,
                                   }}
                                 >
                                   {w.name.charAt(0)}
                                 </span>
-                                <div>
-                                  <div className="flex items-center gap-2">
+                                <div className="min-w-0">
+                                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                                     <p className="display-serif text-lg leading-tight text-cream">
                                       {w.name}
                                     </p>
@@ -308,12 +308,12 @@ export default function Registration() {
                                       {w.tag}
                                     </span>
                                   </div>
-                                  <p className="text-xs uppercase tracking-[0.28em] text-cream/55">
+                                  <p className="mt-0.5 text-[0.68rem] uppercase tracking-[0.22em] text-cream/55 sm:text-xs sm:tracking-[0.28em]">
                                     {w.date}
                                   </p>
                                 </div>
                               </div>
-                              <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-3 sm:gap-4">
                                 <p className="display-serif text-xl text-cream">
                                   ${w.price.toLocaleString('en-US')}
                                 </p>
@@ -509,7 +509,7 @@ export default function Registration() {
                         A few house rules before we dance together. Please read and accept.
                       </p>
 
-                      <div className="mt-7 grid grid-cols-2 gap-3">
+                      <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
                         {CONDUCT.map((c, idx) => (
                           <div
                             key={c.title}
@@ -701,7 +701,7 @@ export default function Registration() {
 
           {/* SIDE SUMMARY */}
           <aside className="col-span-12 lg:col-span-4">
-            <div className="sticky top-28 space-y-5">
+            <div className="space-y-5 lg:sticky lg:top-28">
               <div className="overflow-hidden rounded-[24px] border border-cream/10 bg-gradient-to-br from-maroon/30 via-navy-800/60 to-royal/30 p-6 backdrop-blur-xl">
                 <p className="text-[0.6rem] uppercase tracking-[0.32em] text-gold/90">Order summary</p>
                 <p className="display-serif mt-3 text-2xl leading-tight text-cream">

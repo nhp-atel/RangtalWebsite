@@ -24,7 +24,7 @@ function Digit({ value, label }) {
   return (
     <div className="relative flex w-full flex-col items-center">
       <div className="relative overflow-hidden">
-        <div className="display-serif relative flex items-end text-[clamp(3.4rem,11vw,8rem)] font-medium leading-none tracking-tighter text-cream">
+        <div className="display-serif relative flex items-end text-[clamp(2.4rem,11vw,8rem)] font-medium leading-none tracking-tighter text-cream">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={formatted}
@@ -156,7 +156,7 @@ export default function Countdown() {
   const { days, hours, minutes, seconds } = useCountdown(TARGET)
 
   return (
-    <section id="countdown" className="relative isolate overflow-hidden py-28">
+    <section id="countdown" className="relative isolate overflow-hidden pt-32 pb-20 sm:py-28">
       {/* base */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#1a0b30] via-50% to-[#3E1071]" />
       {/* warm sun behind */}
@@ -169,7 +169,7 @@ export default function Countdown() {
       {/* festive floating particles */}
       <Particles count={40} />
 
-      <div className="container-wide relative pt-24">
+      <div className="container-wide relative pt-16 sm:pt-24">
         <div className="grid grid-cols-12 items-end gap-y-12">
           <div className="col-span-12 lg:col-span-7">
             <div className="section-label">Navratri 2026 · Sharad</div>
@@ -192,14 +192,14 @@ export default function Countdown() {
           transition={{ duration: 0.9 }}
           className="relative mt-16"
         >
-          <div className="relative overflow-hidden rounded-[28px] border border-cream/15 bg-gradient-to-br from-black/30 via-navy-900/40 to-black/30 px-6 py-14 backdrop-blur-xl md:px-16 md:py-20">
+          <div className="relative overflow-hidden rounded-[24px] border border-cream/15 bg-gradient-to-br from-black/30 via-navy-900/40 to-black/30 px-4 py-10 backdrop-blur-xl sm:rounded-[28px] sm:px-6 sm:py-14 md:px-16 md:py-20">
             {/* ornate corner */}
-            <div className="pointer-events-none absolute left-6 top-6 h-12 w-12 border-l-2 border-t-2 border-gold/60" />
-            <div className="pointer-events-none absolute right-6 top-6 h-12 w-12 border-r-2 border-t-2 border-gold/60" />
-            <div className="pointer-events-none absolute left-6 bottom-6 h-12 w-12 border-l-2 border-b-2 border-gold/60" />
-            <div className="pointer-events-none absolute right-6 bottom-6 h-12 w-12 border-r-2 border-b-2 border-gold/60" />
+            <div className="pointer-events-none absolute left-4 top-4 h-8 w-8 border-l-2 border-t-2 border-gold/60 sm:left-6 sm:top-6 sm:h-12 sm:w-12" />
+            <div className="pointer-events-none absolute right-4 top-4 h-8 w-8 border-r-2 border-t-2 border-gold/60 sm:right-6 sm:top-6 sm:h-12 sm:w-12" />
+            <div className="pointer-events-none absolute left-4 bottom-4 h-8 w-8 border-l-2 border-b-2 border-gold/60 sm:left-6 sm:bottom-6 sm:h-12 sm:w-12" />
+            <div className="pointer-events-none absolute right-4 bottom-4 h-8 w-8 border-r-2 border-b-2 border-gold/60 sm:right-6 sm:bottom-6 sm:h-12 sm:w-12" />
 
-            <div className="grid grid-cols-4 items-end gap-4 md:gap-8">
+            <div className="grid grid-cols-4 items-end gap-2 sm:gap-4 md:gap-8">
               <Digit value={days} label="Days" />
               <div className="display-serif hidden self-end pb-6 text-5xl text-gold/40 md:block">
                 :
