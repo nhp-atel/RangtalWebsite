@@ -7,7 +7,11 @@ const STEPS = ['Batch', 'Level', 'Details', 'Conduct', 'Payment', 'Confirm']
 const CONDUCT = [
   {
     title: 'No refunds',
-    body: 'All sign-ups are final. Once you register for the month, the fee is non-refundable.',
+    body: (
+      <>
+        All sign-ups are <strong className="font-bold text-cream">FINAL</strong>. Once you register for the month, the fee is non-refundable.
+      </>
+    ),
   },
   {
     title: 'Monthly only',
@@ -585,7 +589,7 @@ export default function Registration() {
                           Please send your <span className="text-cream font-semibold">${total} Zelle payment</span> to{' '}
                           <span className="text-cream font-semibold">Riya Shah</span> at:
                         </p>
-                        <p className="display-serif mt-2 text-3xl text-cream">(630) 555-0150</p>
+                        <p className="display-serif mt-2 text-3xl text-cream">1-847-834-9807</p>
                         <p className="mt-3 text-xs leading-relaxed text-cream/55">
                           Add your full name in the Zelle memo so we can match your payment.
                           Your spot is confirmed once we receive it.
@@ -759,7 +763,7 @@ export default function Registration() {
               <div className="rounded-[24px] border border-cream/10 bg-cream/[0.03] p-6">
                 <p className="text-xs uppercase tracking-[0.32em] text-cream/55">Questions?</p>
                 <p className="display-serif mt-2 text-lg text-cream">WhatsApp us</p>
-                <p className="mt-1 text-xs text-cream/55">(630) 555-0150 · 10am – 8pm CT</p>
+                <p className="mt-1 text-xs text-cream/55">1-847-834-9807</p>
                 <a href="#" onClick={(e) => e.preventDefault()} className="mt-3 inline-flex items-center gap-2 text-xs text-gold hover:text-cream">
                   Open chat <span>→</span>
                 </a>

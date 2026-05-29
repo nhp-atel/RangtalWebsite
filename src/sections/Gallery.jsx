@@ -4,7 +4,7 @@ import { animate, motion, useMotionValue, useScroll, useTransform } from 'framer
 const INSTAGRAM_URL = 'https://www.instagram.com/rangtaal_'
 
 // Reels we want to spotlight — just the shortcodes from the share links.
-const FEATURED_REELS = ['DWQMzlrjAzP', 'DWmPhp9kezn', 'DWUVtSIEdo8']
+const FEATURED_REELS = ['DWQMzlrjAzP', 'DWmPhp9kezn', 'DWUVtSIEdo8', 'DXJ_SEpiYFp', 'DYBSttoMMS9']
 
 // Real moments from Rangtaal — orientation-aware masonry.
 // GR4 is portrait (tall tile), GR6 is wide, the rest are landscape.
@@ -295,8 +295,12 @@ export default function Gallery() {
           </div>
           <div className="col-span-12 lg:col-span-3 lg:col-start-10">
             <p className="text-sm leading-relaxed text-cream/65">
-              A loose, ongoing scrapbook from our workshops, rehearsals, festival
-              nights and afterparties. Mostly polaroids. Sometimes accidents. Always honest.
+              A collection of moments from our classes, rehearsals, performances,
+              and celebrations. Some planned, some spontaneous, all part of the journey.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-cream/65">
+              A glimpse into life at Rangtaal. From first steps to festival nights,
+              these moments capture the friendships, energy, and memories made along the way.
             </p>
             <a
               href={INSTAGRAM_URL}

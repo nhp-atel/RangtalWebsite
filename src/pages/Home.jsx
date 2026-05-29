@@ -74,16 +74,16 @@ export default function Home() {
             <div className="col-span-12 lg:col-span-5 lg:col-start-8">
               <div className="section-label">Season recap · May batch</div>
               <h2 className="display-serif mt-5 text-[clamp(2.1rem,4.5vw,3.6rem)] font-medium leading-[1.12] tracking-tight text-cream">
-                That’s a wrap on{' '}
-                <span className="gold-text-gradient inline-block pb-[0.12em] italic">May</span>.
+                A month of Garba, countless{' '}
+                <span className="gold-text-gradient inline-block pb-[0.12em] pr-[0.14em] italic">memories.</span>
               </h2>
               <p className="mt-5 max-w-md text-base leading-relaxed text-cream/70">
-                Our May circle just closed out a full month of garba — new steps, new
-                friends, and a whole lot of rhythm. Thank you to everyone who showed
-                up and danced their hearts out.
+                May brought new dancers, new friendships, and plenty of spinning,
+                clapping, and learning along the way. Thank you to everyone who made
+                our first month so special.
               </p>
               <p className="mt-4 max-w-md text-base leading-relaxed text-cream/60">
-                June is up next. Stay tuned — the circle only keeps growing.
+                June is next. The circle keeps growing.
               </p>
               <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-gold">
                 <span className="relative grid h-2 w-2 place-items-center">

@@ -179,7 +179,7 @@ export default function Countdown() {
           </div>
           <div className="col-span-12 lg:col-span-4 lg:col-start-9">
             <p className="text-base leading-relaxed text-cream/70">
-              The 2026 Navratri will be from Oct 11 to Oct 19.
+              Mark your calendars: Navratri 2026 takes place October 11–19.
             </p>
           </div>
         </div>

@@ -145,6 +145,13 @@ textarea {
     -webkit-text-fill-color: transparent;
   }
 
+  .magenta-text-gradient {
+    background: linear-gradient(135deg, #FF7EB3 0%, #FF4D8D 40%, #E0218A 70%, #C026D3 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .divider-ornate {
     @apply relative flex items-center justify-center;
   }

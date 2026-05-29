@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 // One class — every Tuesday, 7:30–9:30 PM — sold by the month.
-const SCHEDULE = 'Every Tuesday · 7:30 – 9:30 PM'
+const SCHEDULE = "Tuesday's · 7:30 – 9:30 PM"
 
 const workshops = [
   {
@@ -13,7 +13,6 @@ const workshops = [
     status: 'soldout',
     start: 'Started May 5',
     schedule: SCHEDULE,
-    theme: 'Foundations',
     blurb:
       'Where the season began. Three-step basics, claps, posture and the very first full garba circle. This batch is full.',
     palette: 'from-[#7B1E3A] via-[#9B2A4C] to-[#F77F00]',
@@ -27,7 +26,6 @@ const workshops = [
     status: 'soldout',
     start: 'Started June 2',
     schedule: SCHEDULE,
-    theme: 'Rhythm & Footwork',
     blurb:
       'Taali-chutki, faster tempos and the confidence to dance without counting. Our biggest batch yet — and completely sold out.',
     palette: 'from-[#5A189A] via-[#7B2CBF] to-[#FF4D8D]',
@@ -41,7 +39,6 @@ const workshops = [
     status: 'upcoming',
     start: 'Starts July 7',
     schedule: SCHEDULE,
-    theme: 'Formations & Flow',
     blurb:
       'Step into formations. Partner play, dodhiya, and the flowing transitions that turn a simple circle into something cinematic. Beginners and returning dancers equally welcome.',
     palette: 'from-[#0B132B] via-[#5A189A] to-[#F4B942]',
@@ -55,7 +52,6 @@ const workshops = [
     status: 'upcoming',
     start: 'Starts Aug 4',
     schedule: SCHEDULE,
-    theme: 'Navratri-Ready',
     blurb:
       'The Navratri-ready batch. Polished choreography, stamina and stage presence — so you walk onto the festival floor and own it.',
     palette: 'from-[#FF4D8D] via-[#7B1E3A] to-[#5A189A]',
@@ -183,12 +179,6 @@ function BatchDetail({ ws, onSeeUpcoming }) {
             <p className="mt-1 text-xs uppercase tracking-[0.24em] text-cream/70">{ws.schedule}</p>
           </div>
         </div>
-
-        <div className="absolute -right-6 top-10 hidden md:block">
-          <div className="rotate-[-6deg] rounded-xl border border-cream/15 bg-navy-900/85 px-4 py-2 text-xs uppercase tracking-[0.28em] text-cream backdrop-blur-md shadow-glow-maroon">
-            {ws.theme}
-          </div>
-        </div>
       </motion.div>
 
       {/* CONTENT */}
@@ -210,7 +200,7 @@ function BatchDetail({ ws, onSeeUpcoming }) {
         </div>
         <h3 className="display-serif mt-3 text-4xl font-medium text-cream md:text-5xl">{ws.title}</h3>
         <p className="mt-2 text-sm text-cream/55">
-          {ws.schedule} · {ws.theme}
+          {ws.schedule}
         </p>
         <p className="mt-5 max-w-md text-base leading-relaxed text-cream/75">{ws.blurb}</p>
 

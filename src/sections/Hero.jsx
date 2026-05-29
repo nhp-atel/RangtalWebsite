@@ -59,16 +59,7 @@ export default function Hero() {
         <div className="grid grid-cols-12 gap-y-16 lg:gap-x-8">
           {/* Left — text block; the medallion breathes in the open space to the right */}
           <div className="relative z-20 col-span-12 lg:col-span-8 lg:pr-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="section-label"
-            >
-              Navratri 2026 · Season Live
-            </motion.div>
-
-            <div className="mt-6">
+            <div>
               <h1 className="display-serif text-[clamp(2.5rem,11vw,6.4rem)] font-medium leading-[0.95] tracking-tight text-cream">
                 <motion.span
                   initial={{ opacity: 0, y: 60 }}
@@ -78,7 +69,7 @@ export default function Hero() {
                 >
                   Where{' '}
                   <span className="relative inline-block">
-                    <span className="gold-text-gradient italic pr-[0.12em]">Rhythm</span>
+                    <span className="magenta-text-gradient italic pr-[0.12em]">Rhythm</span>
                     <svg
                       className="absolute -bottom-2 left-0 h-3 w-full"
                       viewBox="0 0 200 12"
@@ -87,7 +78,7 @@ export default function Hero() {
                       <motion.path
                         d="M2 8 Q 50 2 100 6 T 198 5"
                         fill="none"
-                        stroke="#F4B942"
+                        stroke="#FF4D8D"
                         strokeWidth="2"
                         strokeLinecap="round"
                         initial={{ pathLength: 0 }}
@@ -115,7 +106,7 @@ export default function Hero() {
               className="mt-7 max-w-xl text-lg leading-relaxed text-cream/70"
             >
               Whether you're taking your first step or getting ready for Navratri,
-               Rangtaal is a place to learn, practice, and enjoy together.
+               Rangtaal is a place to learn, practice, and celebrate together.
             </motion.p>
 
             <motion.div
@@ -182,7 +173,7 @@ export default function Hero() {
             {[...marqueeWords, ...marqueeWords, ...marqueeWords].map((w, i) => (
               <span
                 key={i}
-                className="display-serif text-3xl font-light tracking-tight text-cream/40 sm:text-4xl md:text-5xl"
+                className="display-serif text-3xl font-light uppercase tracking-tight text-cream/40 sm:text-4xl md:text-5xl"
               >
                 {w}
                 <span className="ml-12 inline-block translate-y-[-6px] text-gold/60">✦</span>

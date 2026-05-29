@@ -5,8 +5,8 @@ import DandiyaMedallion from '../components/DandiyaMedallion.jsx'
 const INSTAGRAM_URL = 'https://www.instagram.com/rangtaal_'
 const WHATSAPP_URL = 'https://chat.whatsapp.com/GHcpbXvDVKUELszf2NGDoJ?mode=gi_t'
 const EMAIL = 'hello@rangtaal.com'
-const PHONE_DISPLAY = '(630) 555-0150'
-const PHONE_HREF = 'tel:+16305550150'
+const PHONE_DISPLAY = '1-847-834-9807'
+const PHONE_HREF = 'tel:+18478349807'
 
 const socials = [
   {
@@ -136,7 +136,6 @@ export default function Contact() {
               <p className="mt-2 display-serif text-xl text-cream transition group-hover:text-gold">
                 {PHONE_DISPLAY}
               </p>
-              <p className="mt-1 text-xs text-cream/50">10am – 8pm CT</p>
             </div>
           </Card>
 
