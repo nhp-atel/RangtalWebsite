@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { animate, motion, useMotionValue, useScroll, useTransform } from 'framer-motion'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/rangtaal_'
 
@@ -80,8 +80,41 @@ function CarouselTile({ tile, i }) {
   const [index, setIndex] = useState(0)
   const go = (dir) => setIndex((p) => (p + dir + n) % n)
 
+  // Position is driven by a single motion value (in px) so drag and the
+  // snap-to-slide animation never fight each other. We measure the tile width
+  // to convert slide index <-> pixels.
+  const figureRef = useRef(null)
+  const [width, setWidth] = useState(0)
+  const x = useMotionValue(0)
+  const spring = { type: 'spring', stiffness: 320, damping: 36 }
+
+  useEffect(() => {
+    const el = figureRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      const w = entry.contentRect.width
+      setWidth((prev) => (prev === w ? prev : w))
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  // Animate to the active photo only when the index changes (e.g. a swipe or
+  // arrow tap) — this is the one spring the user should see.
+  useEffect(() => {
+    const controls = animate(x, -index * width, spring)
+    return controls.stop
+  }, [index])
+
+  // When the width changes (resize, mobile URL-bar show/hide, font reflow),
+  // reposition instantly so the slide never springs/jumps on its own.
+  useEffect(() => {
+    x.set(-index * width)
+  }, [width])
+
   return (
     <motion.figure
+      ref={figureRef}
       initial={{ opacity: 0, y: 40, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-50px' }}
@@ -90,17 +123,17 @@ function CarouselTile({ tile, i }) {
     >
       {/* sliding photo track — drag/swipe horizontally */}
       <motion.div
-        className="absolute inset-0 flex h-full w-full cursor-grab active:cursor-grabbing"
-        animate={{ x: `-${index * 100}%` }}
-        transition={{ type: 'spring', stiffness: 260, damping: 32 }}
+        className="absolute inset-0 flex h-full w-full cursor-grab touch-pan-y active:cursor-grabbing"
+        style={{ x }}
         drag="x"
         dragDirectionLock
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.18}
+        dragConstraints={{ left: -(n - 1) * width, right: 0 }}
+        dragElastic={0.12}
         onDragEnd={(_, info) => {
           const power = info.offset.x + info.velocity.x * 0.08
           if (power < -70) go(1)
           else if (power > 70) go(-1)
+          else animate(x, -index * width, spring) // settle back to current slide
         }}
       >
         {photos.map((src, idx) => (
