@@ -19,9 +19,9 @@ const tiles = [
     moment: 'In the Moment',
     span: 'lg:col-span-6 h-[340px]',
     pos: 'center 35%',
-    // Multiple people — swipe/scroll through them. Stand-ins for now:
-    // drop more face shots into /public and add their paths to this list.
-    photos: ['/GR7.webp', '/GR3.webp', '/GR1.webp'],
+    // Multiple people — swipe/scroll through them.
+    // Drop more face shots into /public and add their paths to this list.
+    photos: ['/nik-patel.jpg', '/GR7.webp', '/GR3.webp', '/GR1.webp'],
   },
   { id: 6, src: '/GR5.webp', title: 'On the Field', moment: 'Community Night', span: 'lg:col-span-6 h-[340px]' },
   { id: 7, src: '/GR1-circle.webp', title: 'The Whole Circle', moment: 'The Rangtaal family', span: 'sm:col-span-12 lg:col-span-12 aspect-[1348/766]' },

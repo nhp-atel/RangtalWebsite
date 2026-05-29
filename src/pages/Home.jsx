@@ -94,6 +94,57 @@ export default function Home() {
             ))}
           </div>
 
+          {/* May batch recap */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-20 grid grid-cols-12 items-center gap-y-10 lg:gap-x-12"
+          >
+            {/* photo */}
+            <div className="col-span-12 lg:col-span-7">
+              <div className="relative mx-auto aspect-[4/3] w-full max-w-[640px] overflow-hidden rounded-[28px] border border-cream/15 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] lg:max-w-none">
+                <img
+                  src="/MayBatch.webp"
+                  alt="Rangtaal’s May 2026 garba batch gathered together at the close of the month"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" />
+                <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-black/40 px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.28em] text-cream/85 backdrop-blur-md">
+                  May 2026 · Wrapped
+                </span>
+              </div>
+            </div>
+
+            {/* copy */}
+            <div className="col-span-12 lg:col-span-5 lg:col-start-8">
+              <div className="section-label">Season recap · May batch</div>
+              <h2 className="display-serif mt-5 text-[clamp(2.1rem,4.5vw,3.6rem)] font-medium leading-[1.12] tracking-tight text-cream">
+                That’s a wrap on{' '}
+                <span className="gold-text-gradient inline-block pb-[0.12em] italic">May</span>.
+              </h2>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-cream/70">
+                Our May circle just closed out a full month of garba — new steps, new
+                friends, and a whole lot of rhythm. Thank you to everyone who showed
+                up and danced their hearts out.
+              </p>
+              <p className="mt-4 max-w-md text-base leading-relaxed text-cream/60">
+                June is up next. Stay tuned — the circle only keeps growing.
+              </p>
+              <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-gold">
+                <span className="relative grid h-2 w-2 place-items-center">
+                  <span className="absolute h-2 w-2 animate-ping rounded-full bg-gold/70" />
+                  <span className="h-2 w-2 rounded-full bg-gold" />
+                </span>
+                June · Coming soon
+              </div>
+            </div>
+          </motion.div>
+
           {/* register band */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

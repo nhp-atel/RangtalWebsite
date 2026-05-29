@@ -78,7 +78,7 @@ export default function Hero() {
                 >
                   Where{' '}
                   <span className="relative inline-block">
-                    <span className="gold-text-gradient italic">Rhythm</span>
+                    <span className="gold-text-gradient italic pr-[0.12em]">Rhythm</span>
                     <svg
                       className="absolute -bottom-2 left-0 h-3 w-full"
                       viewBox="0 0 200 12"
