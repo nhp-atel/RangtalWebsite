@@ -19,9 +19,14 @@ const tiles = [
     moment: 'In the Moment',
     span: 'lg:col-span-6 h-[340px]',
     pos: 'center 35%',
-    // Multiple people — swipe/scroll through them.
-    // Drop more face shots into /public and add their paths to this list.
-    photos: ['/nik-patel.jpg', '/GR7.webp', '/GR3.webp', '/GR1.webp'],
+    // Multiple people — swipe/scroll through them. A path uses the tile's
+    // default crop; { src, pos } lets a portrait (Nik) anchor its own face.
+    photos: [
+      { src: '/nik-patel.jpg', pos: 'center 22%' },
+      '/GR7.webp',
+      '/GR3.webp',
+      '/GR1.webp',
+    ],
   },
   { id: 6, src: '/GR5.webp', title: 'On the Field', moment: 'Community Night', span: 'lg:col-span-6 h-[340px]' },
   { id: 7, src: '/GR1-circle.webp', title: 'The Whole Circle', moment: 'The Rangtaal family', span: 'sm:col-span-12 lg:col-span-12 aspect-[1348/766]' },
@@ -136,19 +141,25 @@ function CarouselTile({ tile, i }) {
           else animate(x, -index * width, spring) // settle back to current slide
         }}
       >
-        {photos.map((src, idx) => (
-          <div key={src} className="relative h-full w-full shrink-0 basis-full">
-            <img
-              src={src}
-              alt={`${tile.title} — ${tile.moment} (${idx + 1} of ${n})`}
-              loading="lazy"
-              decoding="async"
-              draggable={false}
-              style={{ objectPosition: tile.pos || 'center' }}
-              className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            />
-          </div>
-        ))}
+        {photos.map((photo, idx) => {
+          // Photos may be a plain path or { src, pos } so portraits and
+          // landscapes can each anchor their own crop in the shared tile.
+          const src = typeof photo === 'string' ? photo : photo.src
+          const objectPosition = (typeof photo === 'object' && photo.pos) || tile.pos || 'center'
+          return (
+            <div key={src} className="relative h-full w-full shrink-0 basis-full">
+              <img
+                src={src}
+                alt={`${tile.title} — ${tile.moment} (${idx + 1} of ${n})`}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+                style={{ objectPosition }}
+                className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
+          )
+        })}
       </motion.div>
 
       {/* grain + overlay */}
