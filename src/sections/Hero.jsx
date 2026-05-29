@@ -56,7 +56,7 @@ export default function Hero() {
       <Particles count={36} />
 
       <div className="container-wide relative">
-        <div className="grid grid-cols-12 gap-x-8 gap-y-16">
+        <div className="grid grid-cols-12 gap-y-16 lg:gap-x-8">
           {/* Left — text block; the medallion breathes in the open space to the right */}
           <div className="relative z-20 col-span-12 lg:col-span-8 lg:pr-6">
             <motion.div

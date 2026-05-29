@@ -10,7 +10,7 @@ const pillars = [
 
 export default function About() {
   return (
-    <section id="about" className="relative isolate overflow-hidden pt-32 pb-20 sm:py-28">
+    <section id="about" className="relative isolate overflow-hidden pt-40 pb-20 sm:py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-900 via-[#0a0d22] to-navy-900" />
       <div className="absolute -left-32 top-0 -z-10 h-[60vh] w-[40vw] bg-[radial-gradient(circle,rgba(90,24,154,0.4),transparent_70%)] blur-3xl" />
       <div className="absolute -right-20 bottom-0 -z-10 h-[50vh] w-[40vw] bg-[radial-gradient(circle,rgba(244,185,66,0.25),transparent_70%)] blur-3xl" />
@@ -34,7 +34,7 @@ export default function About() {
           </div>
         </motion.div>
 
-        <div className="mt-20 grid grid-cols-12 gap-x-10 gap-y-16">
+        <div className="mt-20 grid grid-cols-12 gap-y-16 lg:gap-x-10">
           {/* Left — layered visual stack */}
           <div className="relative col-span-12 lg:col-span-6">
             <motion.div
@@ -81,7 +81,7 @@ export default function About() {
                   whileInView={{ rotate: -6, y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="absolute -right-5 -top-8 w-40 rounded-2xl border border-cream/15 bg-cream/95 p-2 shadow-xl"
+                  className="absolute right-1 -top-5 w-28 rounded-2xl border border-cream/15 bg-cream/95 p-2 shadow-xl sm:-right-5 sm:-top-8 sm:w-40"
                 >
                   <div className="relative aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-[#7B1E3A] to-[#5A189A]">
                     <div className="absolute inset-0 grid place-items-center">
@@ -105,15 +105,15 @@ export default function About() {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.5 }}
-                  className="absolute -bottom-8 -left-5 w-56 rounded-2xl border border-cream/15 bg-navy-900/85 p-5 backdrop-blur-xl shadow-glow-maroon"
+                  className="absolute -bottom-5 left-1 w-[13.5rem] rounded-2xl border border-cream/15 bg-navy-900/85 p-4 backdrop-blur-xl shadow-glow-maroon sm:-bottom-8 sm:-left-5 sm:w-56 sm:p-5"
                 >
                   <div className="text-[0.6rem] uppercase tracking-[0.32em] text-gold/80">
                     Our community
                   </div>
-                  <p className="display-serif mt-2 text-4xl font-medium text-cream">
+                  <p className="display-serif mt-2 text-3xl font-medium text-cream sm:text-4xl">
                     150+ dancers
                   </p>
-                  <p className="mt-2 text-xs text-cream/55">
+                  <p className="mt-2 text-[0.7rem] leading-relaxed text-cream/55 sm:text-xs">
                     Led by 8 instructors — and growing every single Tuesday.
                   </p>
                 </motion.div>

@@ -142,7 +142,7 @@ function Motif({ name, color = '#F4B942' }) {
 function BatchDetail({ ws, onSeeUpcoming }) {
   const sold = ws.status === 'soldout'
   return (
-    <div className="relative grid grid-cols-12 items-center gap-x-6 gap-y-8">
+    <div className="relative grid grid-cols-12 items-center gap-y-8 lg:gap-x-6">
       {/* IMAGE / VISUAL */}
       <motion.div
         initial={{ opacity: 0, x: -24 }}
@@ -264,7 +264,7 @@ export default function Workshops() {
 
       <div className="container-wide">
         {/* Section header */}
-        <div className="grid grid-cols-12 items-end gap-8">
+        <div className="grid grid-cols-12 items-end gap-y-8 lg:gap-x-8">
           <div className="col-span-12 lg:col-span-7">
             <div className="section-label">Workshops · 2026 Season</div>
             <h2 className="display-serif mt-5 text-[clamp(2.4rem,5vw,4.6rem)] font-medium leading-[0.95] tracking-tight text-cream">

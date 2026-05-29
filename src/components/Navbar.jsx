@@ -50,6 +50,14 @@ export default function Navbar() {
           scrolled ? 'py-2' : 'py-4'
         }`}
       >
+        {/* Mobile scrim — fades page content cleanly under the floating nav
+            instead of letting it bleed through the gaps between the pills. */}
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-[130%] bg-gradient-to-b from-navy-900 via-navy-900/92 to-transparent transition-opacity duration-500 md:hidden ${
+            scrolled ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
         <div className="container-wide">
           <div
             className={`relative flex items-center justify-between rounded-full px-4 pl-5 pr-3 transition-all duration-500 ${

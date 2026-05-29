@@ -251,7 +251,7 @@ export default function Gallery() {
 
       <div className="container-wide">
         {/* asymmetrical header */}
-        <div className="grid grid-cols-12 items-end gap-8">
+        <div className="grid grid-cols-12 items-end gap-y-8 lg:gap-x-8">
           <div className="col-span-12 lg:col-span-8">
             <div className="section-label">Gallery · The Reel</div>
             <h2 className="display-serif mt-5 text-[clamp(2.4rem,5vw,4.8rem)] font-medium leading-[0.95] tracking-tight text-cream">

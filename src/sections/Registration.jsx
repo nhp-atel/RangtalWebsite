@@ -227,7 +227,7 @@ export default function Registration() {
       <div className="absolute -right-10 bottom-0 -z-10 h-[40vh] w-[40vw] bg-[radial-gradient(circle,rgba(90,24,154,0.4),transparent_70%)] blur-3xl" />
 
       <div className="container-wide">
-        <div className="grid grid-cols-12 items-end gap-8">
+        <div className="grid grid-cols-12 items-end gap-y-8 lg:gap-x-8">
           <div className="col-span-12 lg:col-span-7">
             <div className="section-label">Register · Take your spot</div>
             <h2 className="display-serif mt-5 text-[clamp(2.4rem,5vw,4.8rem)] font-medium leading-[0.95] tracking-tight text-cream">
@@ -243,7 +243,7 @@ export default function Registration() {
           </div>
         </div>
 
-        <div className="mt-14 grid grid-cols-12 gap-8">
+        <div className="mt-14 grid grid-cols-12 gap-y-8 lg:gap-x-8">
           {/* MAIN FORM */}
           <div className="col-span-12 lg:col-span-8">
             <div

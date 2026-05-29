@@ -44,7 +44,7 @@ export default function Home() {
         <div className="absolute bottom-0 right-0 -z-10 h-[40vh] w-[40vw] bg-[radial-gradient(circle,rgba(90,24,154,0.3),transparent_70%)] blur-3xl" />
 
         <div className="container-wide">
-          <div className="grid grid-cols-12 items-end gap-8">
+          <div className="grid grid-cols-12 items-end gap-y-8 lg:gap-x-8">
             <div className="col-span-12 lg:col-span-7">
               <div className="section-label">Explore Rangtaal</div>
               <h2 className="display-serif mt-5 text-[clamp(2.2rem,4.5vw,4rem)] font-medium leading-[0.95] tracking-tight text-cream">
