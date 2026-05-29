@@ -6,7 +6,7 @@ const stories = [
     word: 'Confidence',
     sub: 'You walk in nervous. You leave taking up the whole room.',
     quote:
-      'I’ve loved garba for seventy-one years and never found the courage to dance it. I joined Rangtaal in 2025, terrified of making mistakes — and the surprise was that when I did, nobody minded. Everyone just helped me get better.',
+      'I’ve listned to garba for seventy-one years and never found the courage to dance it. I joined Rangtaal in 2025, terrified of making mistakes — and the surprise was that when I did, nobody minded. Everyone just helped me get better.',
     by: 'Asha · started garba at 71',
     color: '#F77F00',
     layout: 'wide',
@@ -16,7 +16,7 @@ const stories = [
     sub: 'Some nights you stop dancing just to look around and laugh.',
     quote:
       'It’s the only place where strangers cheer for you for showing up.',
-    by: 'Rita · returns every season',
+    by: 'Riya Shah',
     color: '#FF4D8D',
     layout: 'short',
   },

@@ -114,9 +114,8 @@ export default function Hero() {
               transition={{ delay: 1.1, duration: 0.8 }}
               className="mt-7 max-w-xl text-lg leading-relaxed text-cream/70"
             >
-              Learn Garba, Raas, and Dandiya through energetic workshops, cultural
-              experiences, and community celebrations — built for dancers who want
-              to feel the festival, not just attend it.
+              Whether you're taking your first step or getting ready for Navratri,
+               Rangtaal is a place to learn, practice, and enjoy together.
             </motion.p>
 
             <motion.div
