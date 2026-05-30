@@ -103,11 +103,17 @@ function Stepper({ step }) {
   )
 }
 
-function Field({ label, children, hint }) {
+function Field({ label, children, hint, required }) {
   return (
     <label className="block">
       <span className="block text-[0.62rem] uppercase tracking-[0.32em] text-cream/55">
         {label}
+        {required && (
+          <span aria-hidden="true" className="ml-1 text-gold">
+            *
+          </span>
+        )}
+        {required && <span className="sr-only"> (required)</span>}
       </span>
       <div className="mt-2">{children}</div>
       {hint && <span className="mt-1 block text-[0.7rem] text-cream/40">{hint}</span>}
@@ -410,7 +416,7 @@ export default function Registration() {
                       </p>
 
                       <div className="mt-7 grid gap-5 md:grid-cols-2">
-                        <Field label="Full name">
+                        <Field label="Full name" required>
                           <input
                             className={inputCls}
                             placeholder="e.g. Ankita Patel"
@@ -418,7 +424,7 @@ export default function Registration() {
                             onChange={(e) => set('fullName', e.target.value)}
                           />
                         </Field>
-                        <Field label="Email">
+                        <Field label="Email" required>
                           <input
                             type="email"
                             className={inputCls}
@@ -427,7 +433,7 @@ export default function Registration() {
                             onChange={(e) => set('email', e.target.value)}
                           />
                         </Field>
-                        <Field label="Phone">
+                        <Field label="Phone" required>
                           <input
                             className={inputCls}
                             placeholder="(630) 555-0142"
@@ -435,7 +441,7 @@ export default function Registration() {
                             onChange={(e) => set('phone', e.target.value)}
                           />
                         </Field>
-                        <Field label="Age group">
+                        <Field label="Age group" required>
                           <div className="flex flex-wrap gap-2">
                             {AGE_GROUPS.map((a) => (
                               <button
@@ -466,6 +472,7 @@ export default function Registration() {
                               <Field
                                 label="Parent / Guardian name"
                                 hint="Required for dancers under 18."
+                                required
                               >
                                 <input
                                   className={inputCls}
@@ -592,7 +599,9 @@ export default function Registration() {
                         <p className="display-serif mt-2 text-3xl text-cream">1-847-834-9807</p>
                         <p className="mt-3 text-xs leading-relaxed text-cream/55">
                           Add your full name in the Zelle memo so we can match your payment.
-                          Your spot is confirmed once we receive it.
+                        </p>
+                        <p className="mt-2 text-sm font-bold leading-relaxed text-cream">
+                          Your spot is only confirmed once we receive the payment.
                         </p>
                       </div>
 
